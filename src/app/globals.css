@@ -1,26 +1,171 @@
 @import "tailwindcss";
 
+/*
+ * ─────────────────────────────────────────────────────────────
+ *  CEREBELLUM EDUCATION NETWORK — DESIGN TOKENS
+ * ─────────────────────────────────────────────────────────────
+ *  Extracted from the official logo (public/logos/cerebellum-logo.png):
+ *    graduation cap / brain blue  ≈ #2468ae  → primary
+ *    "C" arc / tagline orange     ≈ #e89633  → secondary
+ *    "CEREBELLUM" wordmark indigo ≈ #2f3466  → dark
+ *  Mirror any change in src/config/branding.ts (OG image).
+ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Logo blue — primary brand colour */
+  --brand-primary: #2468ae;
+  --brand-primary-dark: #1b5290;
+  --brand-primary-light: #e8f1fa;
+
+  /* Logo orange — secondary accent */
+  --brand-secondary: #e89633;
+  --brand-secondary-dark: #c97a18;
+  --brand-secondary-light: #fdf2e3;
+
+  /* Deeper orange — sparing highlight */
+  --brand-accent: #d9741a;
+
+  /* Logo wordmark indigo-navy — headings & key text */
+  --brand-dark: #262b5c;
+  --brand-dark-soft: #343a72;
+
+  /* Neutrals */
+  --brand-background: #ffffff;
+  --brand-muted: #f3f7fc; /* cool tint of the logo blue */
+  --brand-cream: #fff8ef; /* warm tint of the logo orange */
+  --brand-line: #e1e8f2;
+  --brand-ink: #42526b; /* body text */
+  --brand-ink-soft: #64748b;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-primary: var(--brand-primary);
+  --color-primary-dark: var(--brand-primary-dark);
+  --color-primary-light: var(--brand-primary-light);
+  --color-gold: var(--brand-secondary);
+  --color-gold-dark: var(--brand-secondary-dark);
+  --color-gold-light: var(--brand-secondary-light);
+  --color-accent: var(--brand-accent);
+  --color-navy: var(--brand-dark);
+  --color-navy-soft: var(--brand-dark-soft);
+  --color-surface: var(--brand-background);
+  --color-muted: var(--brand-muted);
+  --color-cream: var(--brand-cream);
+  --color-line: var(--brand-line);
+  --color-ink: var(--brand-ink);
+  --color-ink-soft: var(--brand-ink-soft);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-manrope), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --shadow-soft: 0 1px 2px rgb(38 43 92 / 0.04), 0 8px 24px -8px rgb(38 43 92 / 0.12);
+  --shadow-lift: 0 2px 4px rgb(38 43 92 / 0.04), 0 24px 48px -16px rgb(38 43 92 / 0.22);
+
+  --animate-marquee: marquee 40s linear infinite;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* Element defaults live in the base layer so Tailwind utilities (e.g. `text-white`) can override them. */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--brand-background);
+    color: var(--brand-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    color: var(--brand-dark);
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p { text-wrap: pretty; }
+
+  ::selection {
+    background: var(--brand-secondary-light);
+    color: var(--brand-dark);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--brand-primary);
+    outline-offset: 3px;
+    border-radius: 6px;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Component helpers sit below utilities in the cascade. */
+@layer components {
+  /* Long-form legal / editorial copy */
+  .prose-brand h2 {
+    font-size: 1.375rem;
+    font-weight: 700;
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+  }
+  .prose-brand h3 {
+    font-size: 1.125rem;
+    font-weight: 700;
+    margin-top: 1.75rem;
+    margin-bottom: 0.5rem;
+  }
+  .prose-brand p,
+  .prose-brand li {
+    line-height: 1.75;
+  }
+  .prose-brand p + p { margin-top: 1rem; }
+  .prose-brand ul {
+    list-style: disc;
+    padding-left: 1.25rem;
+    margin: 0.75rem 0 1rem;
+  }
+  .prose-brand li + li { margin-top: 0.4rem; }
+  .prose-brand a {
+    color: var(--brand-primary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* Subtle dotted grid used behind some sections */
+  .bg-dot-grid {
+    background-image: radial-gradient(rgb(38 43 92 / 0.09) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+
+  /* ── Logo-derived gradients ─────────────────────────────────── */
+  .bg-brand-gradient {
+    background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-dark) 100%);
+  }
+  .bg-brand-gradient-soft {
+    background:
+      radial-gradient(60rem 30rem at 0% 0%, var(--brand-primary-light), transparent 60%),
+      radial-gradient(40rem 30rem at 100% 20%, var(--brand-secondary-light), transparent 60%),
+      #fff;
+  }
+  .text-brand-gradient {
+    background: linear-gradient(100deg, var(--brand-primary) 10%, var(--brand-dark) 90%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
 }

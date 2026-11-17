@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Cerebellum Education Network — Website
 
-## Getting Started
-
-First, run the development server:
+Public website for an international medical education consultancy.
+Next.js 16 (App Router, Cache Components) · TypeScript · Tailwind CSS v4 · Framer Motion · React Hook Form + Zod.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # http://localhost:3000
+npm run build && npm start
+npm run lint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Copy `.env.example` to `.env.local` and fill in the values.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Before launch — owner checklist (`TODO(owner)` in code)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Nothing has been invented; empty values are hidden on the site. Search the code for `TODO(owner)`.
 
-## Learn More
+| What | Where |
+| --- | --- |
+| Phone, WhatsApp, email, address, hours, map, social links | `src/config/site.ts` → `contact`, `social` |
+| Company registration, PAN, approvals | `src/config/site.ts` → `company` (shows on About + footer) |
+| Enquiry email: `RESEND_API_KEY`, `CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL` (or `ENQUIRY_WEBHOOK_URL`) | `.env.local` / hosting env, see `.env.example` |
+| Production URL `NEXT_PUBLIC_SITE_URL` | hosting env |
+| Universities for Bangladesh, India, Philippines; confirm existing list | `src/data/universities.ts` |
+| Verified fees per destination | `src/data/destinations.ts` → `indicativeCosts` |
+| Genuine testimonials (with written consent) | `src/data/testimonials.ts` (home section hidden while empty) |
+| Team members | `src/data/team.ts` (About section hidden while empty) |
+| FAQ answers: total cost, hostel & food, safety, internship, refund policy | `src/data/faqs.ts` (hidden until answered) |
+| Verify India note and set `lastChecked` | `src/data/nepal-guidance.ts` |
+| High-resolution logo (current one is 196×65) | `public/logos/`, `src/config/branding.ts` |
+| Legal review of Privacy Policy and Terms | `src/app/privacy-policy`, `src/app/terms-and-conditions` |
 
-To learn more about Next.js, take a look at the following resources:
+## Structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+src/
+  app/            routes, sitemap.ts, robots.ts, opengraph-image.tsx, api/enquiry
+  components/     brand, layout, sections (home + shared), destinations, programmes,
+                  universities, testimonials, forms, ui
+  config/         site.ts (business details), branding.ts, navigation.ts
+  data/           destinations, programmes, universities, faqs, process, testimonials, scholarships, sources
+  lib/            seo.ts, validations.ts (shared Zod schemas), enquiry-delivery.ts
+  types/          content model
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Forms
 
-## Deploy on Vercel
+`/book-counselling` and `/contact` post to `/api/enquiry`, which validates with the same Zod schema as the client,
+checks a honeypot, rate-limits per IP and forwards to `ENQUIRY_WEBHOOK_URL`. If no webhook is configured, the API
+returns 503 and the form shows an error with the direct contact options. It never shows a false success. Turnstile
+spam protection can be enabled with environment variables.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Counselling links can pre-select fields: `/book-counselling?country=georgia&programme=md`.
