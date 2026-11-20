@@ -1,18 +1,17 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import type { Programme } from "@/types/content";
-import { programmeIcons } from "@/components/ui/icons";
+import { CmsIcon } from "@/cms/cms-icon";
 
 export function ProgrammeCard({ programme, index }: { programme: Programme; index?: number }) {
-  const Icon = programmeIcons[programme.icon];
   return (
     <article className="group relative flex h-full flex-col rounded-3xl border border-line bg-white p-7 transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-lift">
       <div className="flex items-start justify-between">
         <span className="grid size-14 place-items-center rounded-2xl bg-primary-light text-primary transition-colors duration-300 group-hover:bg-primary group-hover:text-white">
-          <Icon aria-hidden className="size-7" strokeWidth={1.75} />
+          <CmsIcon icon={programme.icon} aria-hidden className="size-7" strokeWidth={1.75} />
         </span>
         {typeof index === "number" && (
-          <span aria-hidden className="font-display text-sm font-bold text-ink-soft/60">
+          <span aria-hidden className="font-sans text-sm font-bold text-ink-soft/60">
             {String(index + 1).padStart(2, "0")}
           </span>
         )}

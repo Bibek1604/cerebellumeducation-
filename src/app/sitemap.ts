@@ -1,17 +1,16 @@
 import type { MetadataRoute } from "next";
 import { absoluteUrl, siteConfig } from "@/config/site";
-import { destinations } from "@/data/destinations";
-import { programmes } from "@/data/programmes";
-import { universities } from "@/data/universities";
+import { getDestinations } from "@/cms/destinations";
+import { getProgrammes } from "@/cms/programmes";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const [destinations, programmes] = await Promise.all([getDestinations(), getProgrammes()]);
   const lastModified = siteConfig.lastUpdated;
   const staticRoutes: [string, number][] = [
     ["/", 1],
     ["/destinations", 0.9],
     ["/programs", 0.9],
     ["/book-counselling", 0.9],
-    ["/universities", 0.8],
     ["/admission-process", 0.8],
     ["/about", 0.7],
     ["/scholarships", 0.7],
@@ -26,6 +25,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...staticRoutes.map(([path, priority]) => ({ url: absoluteUrl(path), lastModified, priority })),
     ...destinations.map((d) => ({ url: absoluteUrl(`/destinations/${d.slug}`), lastModified, priority: 0.8 })),
     ...programmes.map((p) => ({ url: absoluteUrl(`/programs/${p.slug}`), lastModified, priority: 0.8 })),
-    ...universities.map((u) => ({ url: absoluteUrl(`/universities/${u.slug}`), lastModified, priority: 0.6 })),
   ];
 }

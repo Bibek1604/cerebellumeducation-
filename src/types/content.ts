@@ -73,7 +73,10 @@ export type Programme = {
   shortName: string;
   /** Short tag shown on cards, e.g. "Medicine" */
   category: string;
-  icon: "stethoscope" | "graduation" | "smile" | "heart" | "pill" | "microscope";
+  /** Icon name from the Admin Panel icon list (cms/icons.ts) */
+  icon: string;
+  /** Show the Nepal MEC rules box on the programme page */
+  showNepalRules?: boolean;
   /** Meta description, 120–160 characters */
   seoDescription: string;
   summary: string;
@@ -85,37 +88,6 @@ export type Programme = {
   considerations: string[];
   faqs: FaqItem[];
   image?: ImageAsset;
-};
-
-export type University = {
-  slug: string;
-  enabled: boolean;
-  name: string;
-  /** Short display code used on cards when there is no logo, e.g. "TSMU" */
-  shortName: string;
-  /** Destination slug */
-  country: string;
-  city: string;
-  /** Programme slugs this institution is listed for on this site */
-  programmes: string[];
-  intro: string;
-  /** Official university website */
-  officialUrl: string;
-  /** Direct link to the university's World Directory of Medical Schools entry, if verified */
-  wdomsUrl?: string;
-  /**
-   * Only set true if a formal, written partnership/representation agreement
-   * exists. Displays a "Partner institution" badge.
-   */
-  isPartner: boolean;
-  /** Official logo (licensed / permitted use only) */
-  logo?: ImageAsset;
-  image?: ImageAsset;
-  /** Verified details — leave undefined until confirmed with the university */
-  mediumOfInstruction?: string;
-  tuitionRange?: { amount: string; currency: string; per: "year" | "programme"; source: string; lastVerified: string };
-  intakes?: string[];
-  recognitionNotes?: string[];
 };
 
 export type Testimonial = {

@@ -1,16 +1,18 @@
 import { Logo } from "@/components/brand/logo";
 import { mainNav } from "@/config/navigation";
-import { phoneLink } from "@/config/site";
-import { destinations } from "@/data/destinations";
-import { programmes } from "@/data/programmes";
+import { getSiteSettings, phoneLinkFrom } from "@/cms/content";
+import { getDestinations } from "@/cms/destinations";
+import { getProgrammes } from "@/cms/programmes";
 import { HeaderClient } from "./header-client";
 
-export function SiteHeader() {
+export async function SiteHeader() {
+  const [destinations, programmes] = await Promise.all([getDestinations(), getProgrammes()]);
+  const { contact } = await getSiteSettings();
   return (
     <HeaderClient
       logo={<Logo priority />}
       nav={mainNav}
-      phone={phoneLink()}
+      phone={phoneLinkFrom(contact)}
       menus={{
         destinations: {
           links: destinations.map((d) => ({ label: d.name, href: `/destinations/${d.slug}`, description: d.tagline })),

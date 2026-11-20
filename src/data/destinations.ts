@@ -82,7 +82,9 @@ const all: Destination[] = [
           "Most universities admit international MBBS students for a September intake, with applications opening months earlier. Exact dates are set by each university.",
       },
     ],
-    art: ["#1d5fb8", "#262b5c"],
+    art: ["#1d5fb8", "#123a6b"],
+    // Stock photo (Pexels licence)
+    image: { src: "/images/destinations/china.jpg", alt: "The Forbidden City in Beijing, China" },
   },
   {
     slug: "bangladesh",
@@ -149,7 +151,9 @@ const all: Destination[] = [
           "Requirements for foreign students are published by the Directorate General of Medical Education for each academic session, and individual colleges may add their own criteria.",
       },
     ],
-    art: ["#14806b", "#262b5c"],
+    art: ["#14806b", "#123a6b"],
+    // Stock photo (Pexels licence)
+    image: { src: "/images/destinations/bangladesh.jpg", alt: "National Parliament House in Dhaka, Bangladesh" },
   },
   {
     slug: "india",
@@ -205,7 +209,9 @@ const all: Destination[] = [
           "It depends on your nationality and admission route. Many applicants must qualify in NEET-UG, but the rules for foreign nationals, NRIs and OCI cardholders differ and are updated by the authorities. A counsellor will confirm the current requirement for your case.",
       },
     ],
-    art: ["#c2611a", "#262b5c"],
+    art: ["#c2611a", "#123a6b"],
+    // Stock photo (Pexels licence)
+    image: { src: "/images/destinations/india.jpg", alt: "India Gate in New Delhi, India" },
   },
   {
     slug: "russia",
@@ -264,7 +270,9 @@ const all: Destination[] = [
           "It is a different degree title for a primary medical qualification. Whether it is accepted for licensing depends on your home regulator's rules, so check those before applying.",
       },
     ],
-    art: ["#3554a5", "#262b5c"],
+    art: ["#3554a5", "#123a6b"],
+    // Stock photo (Pexels licence)
+    image: { src: "/images/destinations/russia.jpg", alt: "St Basil's Cathedral in Moscow, Russia" },
   },
   {
     slug: "georgia",
@@ -323,7 +331,9 @@ const all: Destination[] = [
           "Yes. In Georgia the MD is a one-cycle primary medical degree taken after secondary school, comparable in level to an MBBS. It is not the same as a postgraduate MD specialisation in South Asia.",
       },
     ],
-    art: ["#9c2c3d", "#262b5c"],
+    art: ["#9c2c3d", "#123a6b"],
+    // Stock photo (Pexels licence)
+    image: { src: "/images/destinations/georgia.jpg", alt: "Rooftops of Tbilisi, Georgia" },
   },
   {
     slug: "kazakhstan",
@@ -368,7 +378,9 @@ const all: Destination[] = [
           "It varies by programme structure and how the internship is organised. Expect roughly 5 to 6 years, and confirm the exact length with the university and against your home regulator's rules.",
       },
     ],
-    art: ["#0f7fa8", "#262b5c"],
+    art: ["#0f7fa8", "#123a6b"],
+    // Stock photo (Pexels licence)
+    image: { src: "/images/destinations/kazakhstan.jpg", alt: "Bayterek Tower in Astana, Kazakhstan" },
   },
   {
     slug: "philippines",
@@ -421,9 +433,14 @@ const all: Destination[] = [
           "Usually not. The standard route is a pre-medical bachelor's degree first, then the MD after passing the NMAT. Total time is longer than a direct-entry MBBS, which matters for some home regulators.",
       },
     ],
-    art: ["#c9851a", "#262b5c"],
+    art: ["#c9851a", "#123a6b"],
+    // Stock photo (Pexels licence)
+    image: { src: "/images/destinations/philippines.jpg", alt: "Manila skyline at sunset, Philippines" },
   },
 ];
+
+/** Every destination including disabled ones (the Admin Panel defaults). */
+export const allDestinations = all;
 
 export const destinations = all.filter((d) => d.enabled);
 

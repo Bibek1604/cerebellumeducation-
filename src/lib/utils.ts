@@ -8,3 +8,13 @@ export function cn(...inputs: ClassValue[]) {
 export function pad2(n: number) {
   return n.toString().padStart(2, "0");
 }
+
+/** "Jane Doe" -> "JD" */
+export function initials(name: string) {
+  return name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((w) => w[0]!.toUpperCase())
+    .join("");
+}

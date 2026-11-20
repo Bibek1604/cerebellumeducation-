@@ -1,3 +1,4 @@
+import type { SiteSettings } from "@/cms/content";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/config/site";
 import type { FaqItem } from "@/types/content";
@@ -39,8 +40,8 @@ export function pageMetadata({ title, description, path, absoluteTitle, noIndex 
   };
 }
 
-export function organizationJsonLd() {
-  const { contact, social } = siteConfig;
+export function organizationJsonLd(settings: SiteSettings) {
+  const { contact, social, company } = settings;
   const data: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@type": ["Organization", "EducationalOrganization"],
@@ -63,11 +64,11 @@ export function organizationJsonLd() {
     };
   }
   if (social.length) data.sameAs = social.map((s) => s.href);
-  if (siteConfig.company.legalName) data.legalName = siteConfig.company.legalName;
-  if (siteConfig.company.registrationNo) data.identifier = siteConfig.company.registrationNo;
-  if (siteConfig.company.establishedYear) data.foundingDate = siteConfig.company.establishedYear;
+  if (company.legalName) data.legalName = company.legalName;
+  if (company.registrationNo) data.identifier = company.registrationNo;
+  if (company.establishedYear) data.foundingDate = company.establishedYear;
   if (contact.officeHours) data.openingHours = contact.officeHours;
-  data.logo = `${siteConfig.url}/logos/cerebellum-logo.png`;
+  data.logo = `${siteConfig.url}/logos/cerebellum-logo-full.png`;
   return data;
 }
 

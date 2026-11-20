@@ -37,7 +37,7 @@ export default async function OpengraphImage() {
         {logo ? (
           <div style={{ display: "flex", background: "white", borderRadius: 24, padding: "18px 28px", alignSelf: "flex-start" }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={logo} width={branding.logo.width * 1.6} height={branding.logo.height * 1.6} alt="" />
+            <img src={logo} width={Math.round((110 * branding.logo.width) / branding.logo.height)} height={110} alt="" />
           </div>
         ) : (
           <div style={{ fontSize: 34, fontWeight: 800 }}>Cerebellum Education Network</div>

@@ -1,18 +1,21 @@
 import { ExternalLink, ShieldCheck } from "lucide-react";
-import { formatChecked, indiaGuidance, nepalGuidance } from "@/data/nepal-guidance";
+import { formatChecked } from "@/data/nepal-guidance";
+import { getGuidance } from "@/cms/content";
 import { cn } from "@/lib/utils";
 
 /**
  * "Before you apply (Nepal)" — home-country requirements for Nepali students,
  * with a short note for Indian students. Used on /admission-process,
  * medical programme pages and every destination page.
+ * Content is managed in Admin → Nepal & India guidance.
  */
-export function BeforeYouApply({ className, showIndia = true }: { className?: string; showIndia?: boolean }) {
+export async function BeforeYouApply({ className, showIndia = true }: { className?: string; showIndia?: boolean }) {
+  const { nepal: nepalGuidance, india: indiaGuidance, showNepalChecked } = await getGuidance();
   const checked = formatChecked(nepalGuidance.lastChecked);
   return (
     <section aria-labelledby="before-you-apply-title" className={cn("rounded-[2rem] border border-gold/40 bg-cream p-6 sm:p-9", className)}>
       <div className="flex flex-wrap items-center gap-3">
-        <span className="grid size-11 place-items-center rounded-xl bg-navy font-display text-sm font-extrabold text-gold">NP</span>
+        <span className="grid size-11 place-items-center rounded-xl bg-navy font-sans text-sm font-extrabold text-gold">NP</span>
         <h2 id="before-you-apply-title" className="text-xl font-extrabold sm:text-2xl">
           {nepalGuidance.title}
         </h2>
@@ -42,13 +45,15 @@ export function BeforeYouApply({ className, showIndia = true }: { className?: st
         ))}
       </ul>
 
+      {showNepalChecked && (
       <p className="mt-4 flex items-center gap-1.5 text-xs text-ink-soft">
         <ShieldCheck aria-hidden className="size-3.5" />
         {checked ? `Last checked against official sources on ${checked}.` : "Pending verification against official sources."} Rules can
         change, so always confirm on the official websites.
       </p>
+      )}
 
-      {showIndia && (
+      {showIndia && indiaGuidance && (
         <div className="mt-6 rounded-2xl bg-white p-5 ring-1 ring-line">
           <h3 className="font-bold">{indiaGuidance.title}</h3>
           {indiaGuidance.points.map((p) => (

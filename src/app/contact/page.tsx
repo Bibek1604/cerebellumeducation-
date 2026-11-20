@@ -1,11 +1,13 @@
 import Link from "next/link";
-import { MapPin } from "lucide-react";
-import { PageHero } from "@/components/sections/page-hero";
 import { Container } from "@/components/ui/container";
 import { ContactForm } from "@/components/forms/contact-form";
 import { ContactChannels } from "@/components/sections/contact-channels";
-import { siteConfig } from "@/config/site";
+import { OfficeSection } from "@/components/sections/home/office-section";
+import { GenericSection, HeroSection, MUTED_KINDS } from "@/components/cms/sections";
+import { getPage, sectionsOf, visible } from "@/cms/content";
+import type { LinkValue, Section } from "@/cms/types";
 import { pageMetadata } from "@/lib/seo";
+import { cn } from "@/lib/utils";
 
 export const metadata = pageMetadata({
   title: "Contact Us",
@@ -14,55 +16,77 @@ export const metadata = pageMetadata({
   path: "/contact",
 });
 
-export default function ContactPage() {
-  const { mapEmbedUrl, address } = siteConfig.contact;
+/** Content is managed in Admin → Pages → Contact (details under Contact details & company). */
+export default async function ContactPage() {
+  const page = await getPage("page:contact");
+  const sections = sectionsOf(page);
   return (
     <>
-      <PageHero
-        title="We're here to help"
-        description="Questions about destinations, eligibility or the admission process? Send us a message and our team will get back to you."
-        crumbs={[{ label: "Contact", href: "/contact" }]}
-      />
-      <section className="py-16 sm:py-20">
-        <Container>
-          <div className="grid gap-10 lg:grid-cols-[0.7fr_1.3fr] lg:gap-14">
-            <aside className="space-y-6">
-              <ContactChannels />
-              <div className="rounded-3xl bg-gold-light p-7">
-                <h2 className="text-lg font-extrabold">Planning to study medicine abroad?</h2>
-                <p className="mt-2 leading-relaxed text-ink">
-                  For detailed guidance, our counselling form helps us prepare for your conversation.
-                </p>
-                <Link href="/book-counselling" className="mt-4 inline-block font-bold text-primary underline underline-offset-4">
-                  Book free counselling
-                </Link>
-              </div>
-            </aside>
-            <div className="rounded-[2rem] border border-line bg-white p-6 shadow-soft sm:p-10">
-              <h2 className="text-2xl font-extrabold">Send us a message</h2>
-              <p className="mt-2 mb-8 text-ink">Fields marked * are required.</p>
-              <ContactForm />
-            </div>
-          </div>
-
-          {mapEmbedUrl && (
-            <div className="mt-14 overflow-hidden rounded-[2rem] border border-line">
-              <iframe
-                src={mapEmbedUrl}
-                title={`Map showing the ${siteConfig.name} office${address ? ` in ${address.city}` : ""}`}
-                className="h-[420px] w-full"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
-            </div>
-          )}
-          {!mapEmbedUrl && address && (
-            <p className="mt-10 flex items-center gap-2 text-ink">
-              <MapPin aria-hidden className="size-4 text-primary" /> {address.line1}, {address.city}, {address.country}
-            </p>
-          )}
-        </Container>
-      </section>
+      {sections.map((s, i) => {
+        const prev = sections[i - 1];
+        const prevWhite = Boolean(prev && !MUTED_KINDS.has(prev.kind));
+        return <ContactSection key={s.id} section={s} prevWhite={prevWhite} />;
+      })}
     </>
   );
 }
+
+type MainData = {
+  channels: { heading: string; emptyText: string };
+  planning: { heading: string; text: string; link: LinkValue };
+  form: { heading: string; subtitle: string };
+};
+
+function ContactSection({ section, prevWhite }: { section: Section; prevWhite: boolean }) {
+  const show = visible(section);
+
+  switch (section.kind) {
+    case "hero":
+      return <HeroSection section={section} href="/contact" />;
+
+    case "contactMain": {
+      const d = section.data as MainData;
+      const aside = show("channels") || show("planning");
+      const form = show("form");
+      if (!aside && !form) return null;
+      return (
+        <section className="py-16 sm:py-20">
+          <Container>
+            <div className={cn("grid gap-10 lg:gap-14", aside && form && "lg:grid-cols-[0.7fr_1.3fr]")}>
+              {aside && (
+                <aside className="space-y-6">
+                  {show("channels") && <ContactChannels heading={d.channels.heading} emptyText={d.channels.emptyText} />}
+                  {show("planning") && (
+                    <div className="rounded-3xl bg-gold-light p-7">
+                      <h2 className="text-lg font-extrabold">{d.planning.heading}</h2>
+                      <p className="mt-2 leading-relaxed text-ink">{d.planning.text}</p>
+                      {d.planning.link?.label && d.planning.link.href && (
+                        <Link href={d.planning.link.href} className="mt-4 inline-block font-bold text-primary underline underline-offset-4">
+                          {d.planning.link.label}
+                        </Link>
+                      )}
+                    </div>
+                  )}
+                </aside>
+              )}
+              {form && (
+                <div className="rounded-[2rem] border border-line bg-white p-6 shadow-soft sm:p-10">
+                  <h2 className="text-2xl font-extrabold">{d.form.heading}</h2>
+                  {show("form.subtitle") && d.form.subtitle ? <p className="mt-2 mb-8 text-ink">{d.form.subtitle}</p> : <div className="mb-8" />}
+                  <ContactForm />
+                </div>
+              )}
+            </div>
+          </Container>
+        </section>
+      );
+    }
+
+    case "office":
+      return <OfficeSection section={section} />;
+
+    default:
+      return <GenericSection section={section} prevWhite={prevWhite} />;
+  }
+}
+

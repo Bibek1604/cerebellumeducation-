@@ -10,7 +10,6 @@ export const mainNav: NavItem[] = [
   { label: "About Us", href: "/about" },
   { label: "Study Destinations", href: "/destinations", menu: "destinations" },
   { label: "Programmes", href: "/programs", menu: "programmes" },
-  { label: "Universities", href: "/universities" },
   { label: "Admission Process", href: "/admission-process" },
   { label: "Contact", href: "/contact" },
 ];
@@ -20,7 +19,6 @@ export const footerNav = {
     { label: "About Us", href: "/about" },
     { label: "Study Destinations", href: "/destinations" },
     { label: "Programmes", href: "/programs" },
-    { label: "Universities", href: "/universities" },
     { label: "Scholarships", href: "/scholarships" },
   ],
   support: [

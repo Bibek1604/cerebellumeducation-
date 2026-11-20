@@ -1,17 +1,22 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Manrope } from "next/font/google";
+import { Lora, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/layout/site-header";
 import { TopBar } from "@/components/layout/top-bar";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { WhatsAppFab } from "@/components/layout/whatsapp-fab";
+import { StickyCta } from "@/components/layout/sticky-cta";
 import { MotionProvider } from "@/components/providers/motion-provider";
 import { JsonLd } from "@/components/ui/json-ld";
 import { siteConfig } from "@/config/site";
+import { getSiteSettings } from "@/cms/content";
+import { ChromeGate } from "@/components/layout/chrome-gate";
+import { SiteContactProvider } from "@/components/providers/site-contact";
 import { organizationJsonLd, websiteJsonLd } from "@/lib/seo";
 
-const inter = Inter({ variable: "--font-inter", subsets: ["latin"], display: "swap" });
-const manrope = Manrope({ variable: "--font-manrope", subsets: ["latin"], display: "swap", weight: ["500", "600", "700", "800"] });
+/** Body & UI: friendly, modern sans. Headings: classic academic serif. */
+const jakarta = Plus_Jakarta_Sans({ variable: "--font-body", subsets: ["latin"], display: "swap" });
+const lora = Lora({ variable: "--font-heading", subsets: ["latin"], display: "swap", weight: ["500", "600", "700"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -36,23 +41,33 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  // Contact details & company: Admin → Contact details & company.
+  const settings = await getSiteSettings();
+  const { phone, phoneHref, email, whatsapp } = settings.contact;
   return (
-    <html lang="en" className={`${inter.variable} ${manrope.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${jakarta.variable} ${lora.variable}`} suppressHydrationWarning>
       <body className="flex min-h-dvh flex-col" suppressHydrationWarning>
         {/* Without JavaScript, scroll-reveal content must still be visible. */}
         <noscript>
           <style>{`[data-reveal]{opacity:1!important;transform:none!important}`}</style>
         </noscript>
-        <JsonLd data={[organizationJsonLd(), websiteJsonLd()]} />
+        <JsonLd data={[organizationJsonLd(settings), websiteJsonLd()]} />
         <MotionProvider>
-          <TopBar />
-          <SiteHeader />
-          <main id="main" className="flex-1">
-            {children}
-          </main>
-          <SiteFooter />
-          <WhatsAppFab />
+          <SiteContactProvider value={{ phone, phoneHref, email, whatsapp }}>
+            <ChromeGate>
+              <TopBar />
+              <SiteHeader />
+            </ChromeGate>
+            <main id="main" className="flex-1">
+              {children}
+            </main>
+            <ChromeGate>
+              <SiteFooter />
+              <WhatsAppFab />
+              <StickyCta besideFab={Boolean(whatsapp || (phone && phoneHref))} />
+            </ChromeGate>
+          </SiteContactProvider>
         </MotionProvider>
       </body>
     </html>

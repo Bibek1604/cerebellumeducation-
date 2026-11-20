@@ -1,5 +1,4 @@
 import type { Programme } from "@/types/content";
-import { destinations } from "./destinations";
 
 /**
  * Programmes. Set `enabled: false` for any programme the consultancy
@@ -209,12 +208,11 @@ const all: Programme[] = [
   },
 ];
 
+/** Every programme including disabled ones (the Admin Panel defaults). */
+export const allProgrammes = all;
+
 export const programmes = all.filter((p) => p.enabled);
 
 export function getProgramme(slug: string) {
   return programmes.find((p) => p.slug === slug);
-}
-
-export function destinationsForProgramme(slug: string) {
-  return destinations.filter((d) => d.programmes.includes(slug));
 }

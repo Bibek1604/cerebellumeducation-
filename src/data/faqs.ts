@@ -137,9 +137,6 @@ export const homeFaqs: FaqItem[] = [
   "What qualifications are required for MBBS abroad?",
   "Do I need MECEE-BL and an Eligibility Certificate to study MBBS abroad?",
   "Which countries offer medical education opportunities?",
-  "How does the admission process work?",
-  "What documents are generally required?",
-  "How can I compare universities?",
   "What are the expected tuition and living costs?",
   "What should I know about medical licensing after graduation?",
 ]

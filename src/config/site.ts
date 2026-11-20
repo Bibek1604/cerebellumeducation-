@@ -83,6 +83,15 @@ export const siteConfig = {
   } as CompanyDetails,
 };
 
+/**
+ * Verified achievement figures shown on the homepage (stat cards and trust
+ * section). Add ONLY numbers you can prove with records, e.g.
+ *   { value: "350+", label: "Students guided", note: "since 2019" },
+ *   { value: "120+", label: "Students now studying abroad", note: "across 5 countries" },
+ * While empty, the homepage shows figures derived from the site's own content.
+ */
+export const achievements: { value: string; label: string; note?: string }[] = [];
+
 export const hasContactChannel =
   Boolean(siteConfig.contact.phone) ||
   Boolean(siteConfig.contact.whatsapp) ||

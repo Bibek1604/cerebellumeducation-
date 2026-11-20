@@ -84,8 +84,8 @@ export function HeaderClient({ logo, nav, menus, phone }: Props) {
       </a>
       <div
         className={cn(
-          "mx-auto flex max-w-7xl items-center justify-between gap-6 px-4 transition-[height] duration-300 sm:px-6 lg:px-8",
-          scrolled ? "h-[4.25rem]" : "h-20",
+          "mx-auto flex max-w-7xl 2xl:max-w-[88rem] items-center justify-between gap-6 px-4 transition-[height] duration-300 sm:px-6 lg:px-8 [&_img]:transition-[height] [&_img]:duration-300",
+          scrolled ? "h-[4.25rem] [&_img]:h-11 sm:[&_img]:h-12" : "h-20",
         )}
       >
         {logo}
@@ -297,7 +297,7 @@ function MobileMenu({
       transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
       className="overflow-y-auto border-t border-line bg-white xl:hidden"
     >
-      <nav aria-label="Mobile" className="mx-auto max-w-7xl px-4 pt-4 pb-10 sm:px-6">
+      <nav aria-label="Mobile" className="mx-auto max-w-7xl 2xl:max-w-[88rem] px-4 pt-4 pb-10 sm:px-6">
         <ul className="divide-y divide-line">
           {nav.map((item) => {
             const menu = item.menu ? menus[item.menu] : null;
@@ -311,7 +311,7 @@ function MobileMenu({
                       aria-expanded={isOpen}
                       onClick={() => setExpanded(isOpen ? null : item.href)}
                       className={cn(
-                        "flex w-full items-center justify-between py-3.5 text-left font-display text-lg font-bold",
+                        "flex w-full items-center justify-between py-3.5 text-left font-sans text-lg font-bold",
                         isActive(pathname, item.href) ? "text-primary" : "text-navy",
                       )}
                     >
@@ -350,7 +350,7 @@ function MobileMenu({
                     onClick={onNavigate}
                     aria-current={pathname === item.href ? "page" : undefined}
                     className={cn(
-                      "block py-3.5 font-display text-lg font-bold",
+                      "block py-3.5 font-sans text-lg font-bold",
                       isActive(pathname, item.href) ? "text-primary" : "text-navy",
                     )}
                   >

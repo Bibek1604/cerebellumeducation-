@@ -1,5 +1,8 @@
 import "server-only";
 import type { EnquiryValues } from "./validations";
+import { logger } from "./logger";
+
+const log = logger("enquiry");
 
 /**
  * ─────────────────────────────────────────────────────────────
@@ -87,12 +90,12 @@ async function sendViaResend(enquiry: EnquiryValues, meta: Meta): Promise<Delive
       signal: AbortSignal.timeout(10_000),
     });
     if (!res.ok) {
-      console.error(`[enquiry] Resend responded ${res.status}: ${(await res.text()).slice(0, 300)}`);
+      log.error("Email provider rejected the enquiry", { provider: "resend", status: res.status, response: (await res.text()).slice(0, 300) });
       return { ok: false, reason: "upstream_error" };
     }
     return { ok: true, via: "email" };
   } catch (err) {
-    console.error("[enquiry] Resend request failed", err);
+    log.error("Could not reach the email provider", { provider: "resend", err });
     return { ok: false, reason: "upstream_error" };
   }
 }
@@ -109,12 +112,12 @@ async function sendViaWebhook(enquiry: EnquiryValues, meta: Meta): Promise<Deliv
       signal: AbortSignal.timeout(10_000),
     });
     if (!res.ok) {
-      console.error(`[enquiry] webhook responded ${res.status}`);
+      log.error("Webhook rejected the enquiry", { status: res.status });
       return { ok: false, reason: "upstream_error" };
     }
     return { ok: true, via: "webhook" };
   } catch (err) {
-    console.error("[enquiry] webhook request failed", err);
+    log.error("Could not reach the webhook", { err });
     return { ok: false, reason: "upstream_error" };
   }
 }

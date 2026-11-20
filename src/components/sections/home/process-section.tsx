@@ -4,28 +4,32 @@ import { Reveal } from "@/components/ui/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { ButtonLink } from "@/components/ui/button";
 import { ProcessTimeline } from "@/components/sections/process-timeline";
-import { admissionSteps } from "@/data/process";
+import { Highlight } from "@/cms/highlight";
+import { getSteps, visible } from "@/cms/content";
+import type { LinkValue, Section as CmsSection } from "@/cms/types";
 
-export function ProcessSection() {
+/** Content: Admin → Pages → Homepage → Your journey. Steps: Admin → Admission steps. */
+export async function ProcessSection({ section, tone }: { section: CmsSection; tone: "white" | "muted" }) {
+  const d = section.data as { heading: string; description: string; button: LinkValue };
+  const show = visible(section);
+  const admissionSteps = await getSteps();
+  if (admissionSteps.length === 0) return null;
   return (
-    <Section tone="muted">
+    <Section tone={tone}>
       <Container>
-        <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
-          <Reveal>
-            <SectionHeading
-              title="Your Journey to Studying Medicine Abroad"
-              description="Eight clear stages, with a counsellor beside you at each one. Timelines vary by country and intake, and we map yours out at the start."
-            />
-          </Reveal>
-          <Reveal delay={0.1}>
-            <ButtonLink href="/admission-process" variant="outline">
-              See each step in detail <ArrowRight aria-hidden className="size-4" />
-            </ButtonLink>
-          </Reveal>
-        </div>
-        <div className="mt-16">
+        <Reveal>
+          <SectionHeading align="center" title={<Highlight text={d.heading} />} description={show("description") && d.description ? d.description : undefined} />
+        </Reveal>
+        <div className="mt-14">
           <ProcessTimeline steps={admissionSteps} />
         </div>
+        {show("button") && d.button?.label && d.button.href && (
+          <div className="mt-12 text-center">
+            <ButtonLink href={d.button.href} variant="outline">
+              {d.button.label} <ArrowRight aria-hidden className="size-4" />
+            </ButtonLink>
+          </div>
+        )}
       </Container>
     </Section>
   );

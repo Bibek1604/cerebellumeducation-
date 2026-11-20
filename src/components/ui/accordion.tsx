@@ -43,7 +43,7 @@ export function Accordion({
                   aria-hidden
                   className={cn(
                     "mt-0.5 grid size-7 shrink-0 place-items-center rounded-full border transition-all duration-300",
-                    isOpen ? "rotate-45 border-gold bg-gold text-navy" : "border-line text-primary group-hover:border-primary",
+                    isOpen ? "rotate-45 border-gold bg-orange-fill text-white" : "border-line text-primary group-hover:border-primary",
                   )}
                 >
                   <Plus className="size-4" />

@@ -28,9 +28,23 @@ export function DestinationArt({
           alt={destination.image.alt}
           fill
           priority={priority}
-          sizes={size === "hero" ? "(min-width: 1024px) 50vw, 100vw" : "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"}
-          className="object-cover"
+          unoptimized={destination.image.src.startsWith("/media/")}
+          sizes={
+            size === "hero"
+              ? "(min-width: 1024px) 50vw, 100vw"
+              : "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+          }
+          className="object-cover transition-transform duration-700 group-hover:scale-105"
         />
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-gradient-to-t from-navy/35 via-transparent to-navy/20"
+        />
+        {destination.capital && (
+          <span className="absolute top-3 left-3 rounded-full bg-white/90 px-2.5 py-1 text-[0.65rem] font-bold tracking-[0.14em] text-navy uppercase backdrop-blur-sm">
+            {destination.capital}
+          </span>
+        )}
       </div>
     );
   }
@@ -40,13 +54,31 @@ export function DestinationArt({
     <div
       role="img"
       aria-label={`${destination.name}, study destination`}
-      className={cn("relative isolate overflow-hidden text-white", className)}
+      className={cn(
+        "@container relative isolate overflow-hidden text-white",
+        className,
+      )}
       style={{ background: `linear-gradient(135deg, ${from} 0%, ${to} 100%)` }}
     >
-      <svg aria-hidden className="absolute inset-0 size-full" preserveAspectRatio="xMidYMid slice" viewBox="0 0 400 260">
+      <svg
+        aria-hidden
+        className="absolute inset-0 size-full"
+        preserveAspectRatio="xMidYMid slice"
+        viewBox="0 0 400 260"
+      >
         <defs>
-          <pattern id={`${id}-grid`} width="20" height="20" patternUnits="userSpaceOnUse">
-            <path d="M20 0H0V20" fill="none" stroke="#fff" strokeOpacity=".07" />
+          <pattern
+            id={`${id}-grid`}
+            width="20"
+            height="20"
+            patternUnits="userSpaceOnUse"
+          >
+            <path
+              d="M20 0H0V20"
+              fill="none"
+              stroke="#fff"
+              strokeOpacity=".07"
+            />
           </pattern>
         </defs>
         <rect width="400" height="260" fill={`url(#${id}-grid)`} />
@@ -58,10 +90,24 @@ export function DestinationArt({
           <path d="M180 130h300M195 70h270M195 190h270" />
         </g>
         {/* route arc */}
-        <path d="M30 220 C 120 120, 220 90, 318 118" fill="none" stroke="var(--brand-secondary)" strokeWidth="2" strokeDasharray="5 7" strokeLinecap="round" />
+        <path
+          d="M30 220 C 120 120, 220 90, 318 118"
+          fill="none"
+          stroke="var(--brand-secondary)"
+          strokeWidth="2"
+          strokeDasharray="5 7"
+          strokeLinecap="round"
+        />
         <circle cx="30" cy="220" r="4" fill="#fff" fillOpacity=".7" />
         <circle cx="320" cy="118" r="7" fill="var(--brand-secondary)" />
-        <circle cx="320" cy="118" r="14" fill="none" stroke="var(--brand-secondary)" strokeOpacity=".5" />
+        <circle
+          cx="320"
+          cy="118"
+          r="14"
+          fill="none"
+          stroke="var(--brand-secondary)"
+          strokeOpacity=".5"
+        />
       </svg>
 
       <span
@@ -76,8 +122,12 @@ export function DestinationArt({
       </span>
 
       <div className="absolute top-4 right-4 left-4 flex items-start justify-between gap-3 text-[0.68rem] font-semibold tracking-[0.16em] uppercase">
-        <span className="rounded-full bg-white/12 px-2.5 py-1 ring-1 ring-white/20 backdrop-blur-sm">{destination.capital}</span>
-        <span className="text-right text-white/70">{destination.coordinates}</span>
+        <span className="rounded-full bg-white/12 px-2.5 py-1 ring-1 ring-white/20 backdrop-blur-sm">
+          {destination.capital}
+        </span>
+        <span className="hidden text-right whitespace-nowrap text-white/70 @[17rem]:inline">
+          {destination.coordinates}
+        </span>
       </div>
     </div>
   );

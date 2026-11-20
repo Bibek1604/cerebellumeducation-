@@ -4,43 +4,48 @@
  * ─────────────────────────────────────────────────────────────
  *  CEREBELLUM EDUCATION NETWORK — DESIGN TOKENS
  * ─────────────────────────────────────────────────────────────
- *  Extracted from the official logo (public/logos/cerebellum-logo.png):
- *    graduation cap / brain blue  ≈ #2468ae  → primary
- *    "C" arc / tagline orange     ≈ #e89633  → secondary
- *    "CEREBELLUM" wordmark indigo ≈ #2f3466  → dark
+ *  Blues from the logo's graduation cap: light sky (#3cb4f8, the cap's
+ *  left edge) through #1a73d4 (buttons, AA contrast with white) to #135ca6.
+ *  The logo's orange (#f8820d) is the single accent colour.
  *  Mirror any change in src/config/branding.ts (OG image).
  */
 :root {
-  /* Logo blue — primary brand colour */
-  --brand-primary: #2468ae;
-  --brand-primary-dark: #1b5290;
-  --brand-primary-light: #e8f1fa;
+  /* Wordmark royal blue — primary brand colour */
+  --brand-primary: #1a73d4;
+  --brand-primary-dark: #135ca6;
+  --brand-primary-light: #e7f2fc;
+
+  /* Graduation-cap sky blue — gradients & soft highlights */
+  --brand-sky: #3cb4f8;
+  --brand-sky-light: #e6f5fe;
 
   /* Logo orange — secondary accent */
-  --brand-secondary: #e89633;
-  --brand-secondary-dark: #c97a18;
-  --brand-secondary-light: #fdf2e3;
+  --brand-secondary: #f8820d;
+  --brand-secondary-dark: #d96a00;
+  --brand-secondary-light: #fff1e1;
 
   /* Deeper orange — sparing highlight */
-  --brand-accent: #d9741a;
+  --brand-accent: #e46400;
 
-  /* Logo wordmark indigo-navy — headings & key text */
-  --brand-dark: #262b5c;
-  --brand-dark-soft: #343a72;
+  /* Deep royal navy — headings & key text */
+  --brand-dark: #123a6b;
+  --brand-dark-soft: #1d5190;
 
   /* Neutrals */
   --brand-background: #ffffff;
-  --brand-muted: #f3f7fc; /* cool tint of the logo blue */
-  --brand-cream: #fff8ef; /* warm tint of the logo orange */
-  --brand-line: #e1e8f2;
-  --brand-ink: #42526b; /* body text */
-  --brand-ink-soft: #64748b;
+  --brand-muted: #f3f8fd; /* cool tint of the logo blue */
+  --brand-cream: #fff8f0; /* warm tint of the logo orange */
+  --brand-line: #dfe9f4;
+  --brand-ink: #3e4c60; /* body text */
+  --brand-ink-soft: #66748a;
 }
 
 @theme inline {
   --color-primary: var(--brand-primary);
   --color-primary-dark: var(--brand-primary-dark);
   --color-primary-light: var(--brand-primary-light);
+  --color-sky: var(--brand-sky);
+  --color-sky-light: var(--brand-sky-light);
   --color-gold: var(--brand-secondary);
   --color-gold-dark: var(--brand-secondary-dark);
   --color-gold-light: var(--brand-secondary-light);
@@ -54,13 +59,19 @@
   --color-ink: var(--brand-ink);
   --color-ink-soft: var(--brand-ink-soft);
 
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-manrope), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-heading), ui-serif, Georgia, serif;
 
-  --shadow-soft: 0 1px 2px rgb(38 43 92 / 0.04), 0 8px 24px -8px rgb(38 43 92 / 0.12);
-  --shadow-lift: 0 2px 4px rgb(38 43 92 / 0.04), 0 24px 48px -16px rgb(38 43 92 / 0.22);
+  --shadow-soft: 0 1px 2px rgb(18 58 107 / 0.04), 0 8px 24px -8px rgb(18 58 107 / 0.12);
+  --shadow-lift: 0 2px 4px rgb(18 58 107 / 0.04), 0 24px 48px -16px rgb(18 58 107 / 0.22);
 
   --animate-marquee: marquee 40s linear infinite;
+  --animate-float: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
 }
 
 @keyframes marquee {
@@ -87,7 +98,7 @@
   h1, h2, h3, h4 {
     font-family: var(--font-display);
     color: var(--brand-dark);
-    letter-spacing: -0.02em;
+    letter-spacing: -0.01em;
     text-wrap: balance;
   }
 
@@ -112,6 +123,11 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* Admin Panel: hide the public site chrome (top bar, header, footer, floating buttons). */
+body:has([data-admin-root]) [data-site-chrome] {
+  display: none;
 }
 
 /* Component helpers sit below utilities in the cascade. */
@@ -148,22 +164,35 @@
 
   /* Subtle dotted grid used behind some sections */
   .bg-dot-grid {
-    background-image: radial-gradient(rgb(38 43 92 / 0.09) 1px, transparent 1px);
+    background-image: radial-gradient(rgb(18 58 107 / 0.09) 1px, transparent 1px);
     background-size: 22px 22px;
   }
 
   /* ── Logo-derived gradients ─────────────────────────────────── */
   .bg-brand-gradient {
-    background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-dark) 100%);
+    background: linear-gradient(135deg, var(--brand-sky) -5%, var(--brand-primary) 50%, var(--brand-primary-dark) 100%);
+  }
+  /* Orange fill for buttons/badges carrying white text: a touch deeper than the
+     logo orange so white text stays readable (about 3.3:1, bold text only). */
+  .bg-orange-fill {
+    background: linear-gradient(135deg, #ee7a0a 0%, #d4620a 100%);
+  }
+  .bg-orange-fill:hover {
+    background: linear-gradient(135deg, #e2700a 0%, #c45500 100%);
+  }
+
+  /* Hero: the logo cap's saturated blues, deep on the text side, sky on the right */
+  .bg-hero-vivid {
+    background: linear-gradient(115deg, #0b4fc2 0%, #1769e8 38%, #2a8cf2 66%, #3cb4fc 100%);
   }
   .bg-brand-gradient-soft {
     background:
-      radial-gradient(60rem 30rem at 0% 0%, var(--brand-primary-light), transparent 60%),
+      radial-gradient(60rem 30rem at 0% 0%, var(--brand-sky-light), transparent 60%),
       radial-gradient(40rem 30rem at 100% 20%, var(--brand-secondary-light), transparent 60%),
       #fff;
   }
   .text-brand-gradient {
-    background: linear-gradient(100deg, var(--brand-primary) 10%, var(--brand-dark) 90%);
+    background: linear-gradient(100deg, var(--brand-primary-dark) 0%, var(--brand-primary) 55%, #2a95ee 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;

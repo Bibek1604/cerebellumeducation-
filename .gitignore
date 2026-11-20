@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Admin Panel local storage (content, uploads, admin accounts, dev session key)
+/.data/
+
+# Prisma generated client
+/src/app/generated/

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { CircleAlert, CircleCheck, Mail, MessageCircle, Phone } from "lucide-react";
-import { siteConfig, whatsappLink } from "@/config/site";
+import { useSiteContact, whatsappHref } from "@/components/providers/site-contact";
 
 export type SubmitState =
   | { status: "idle" }
@@ -17,8 +17,8 @@ const messages: Record<Extract<SubmitState, { status: "error" }>["reason"], stri
 };
 
 export function DirectContactOptions() {
-  const { phone, phoneHref, email } = siteConfig.contact;
-  const wa = whatsappLink("Hello Cerebellum, I'd like to book a counselling session.");
+  const { phone, phoneHref, email, whatsapp } = useSiteContact();
+  const wa = whatsappHref(whatsapp, "Hello Cerebellum, I'd like to book a counselling session.");
   if (!phone && !email && !wa) {
     return (
       <p className="mt-2 text-sm">

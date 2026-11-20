@@ -1,13 +1,14 @@
 import { MessageCircle, Phone } from "lucide-react";
-import { phoneLink, whatsappLink } from "@/config/site";
+import { getSiteSettings, phoneLinkFrom, whatsappLinkFrom } from "@/cms/content";
 
 /**
  * Floating contact buttons. WhatsApp shows on all screen sizes; the call
  * button is mobile-only. Each renders only when its number is configured.
  */
-export function WhatsAppFab() {
-  const wa = whatsappLink("Hello Cerebellum, I'd like to know more about studying medicine abroad.");
-  const phone = phoneLink();
+export async function WhatsAppFab() {
+  const { contact } = await getSiteSettings();
+  const wa = whatsappLinkFrom(contact, "Hello Cerebellum, I'd like to know more about studying medicine abroad.");
+  const phone = phoneLinkFrom(contact);
   if (!wa && !phone) return null;
 
   return (

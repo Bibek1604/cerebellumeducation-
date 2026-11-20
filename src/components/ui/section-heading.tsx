@@ -28,7 +28,7 @@ export function SectionHeading({
         {title}
       </Tag>
       {description && (
-        <p className={cn("mt-5 text-base leading-relaxed sm:text-lg", onDark ? "text-white/75" : "text-ink")}>
+        <p className={cn("mt-3 text-base leading-relaxed sm:text-lg", onDark ? "text-white/75" : "text-ink")}>
           {description}
         </p>
       )}

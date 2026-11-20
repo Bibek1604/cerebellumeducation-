@@ -1,25 +1,29 @@
 import { Clock, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { SocialIcon } from "@/components/brand/social-icon";
-import { hasContactChannel, phoneLink, siteConfig, whatsappLink } from "@/config/site";
+import { getSiteSettings, phoneLinkFrom, whatsappLinkFrom } from "@/cms/content";
 
-/** Lists only the contact channels configured in src/config/site.ts. */
-export function ContactChannels({ heading = "Reach us directly" }: { heading?: string }) {
-  const { contact, social } = siteConfig;
-  const wa = whatsappLink("Hello Cerebellum, I'd like to know more about studying medicine abroad.");
+/** Lists only the contact channels set in Admin → Contact details & company. */
+export async function ContactChannels({
+  heading = "Reach us directly",
+  emptyText = "Send us a message or book a free session, and a counsellor will get back to you.",
+}: {
+  heading?: string;
+  emptyText?: string;
+}) {
+  const { contact, social, hasContactChannel } = await getSiteSettings();
+  const wa = whatsappLinkFrom(contact, "Hello Cerebellum, I'd like to know more about studying medicine abroad.");
 
   if (!hasContactChannel) {
     return (
       <div className="rounded-3xl border border-line bg-white p-7">
         <h2 className="text-lg font-extrabold">{heading}</h2>
-        <p className="mt-2 leading-relaxed text-ink">
-          Our direct contact details are being updated. Please use the form and a counsellor will get back to you.
-        </p>
+        <p className="mt-2 leading-relaxed text-ink">{emptyText}</p>
       </div>
     );
   }
 
   const rows: { icon: typeof Phone; label: string; value: React.ReactNode; href?: string; external?: boolean }[] = [];
-  const phone = phoneLink();
+  const phone = phoneLinkFrom(contact);
   if (phone) rows.push({ icon: Phone, label: "Call us", value: phone.label, href: phone.href });
   if (wa) rows.push({ icon: MessageCircle, label: "WhatsApp", value: "Chat with a counsellor", href: wa, external: true });
   if (contact.email) rows.push({ icon: Mail, label: "Email", value: contact.email, href: `mailto:${contact.email}` });

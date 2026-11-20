@@ -1,10 +1,11 @@
-import { PageHero } from "@/components/sections/page-hero";
-import { Container, Section } from "@/components/ui/container";
+import { Container, Section as Band } from "@/components/ui/container";
 import { StoriesBrowser } from "@/components/testimonials/stories-browser";
 import { StoriesEmpty } from "@/components/testimonials/stories-empty";
-import { CtaBand } from "@/components/sections/cta-band";
-import { testimonials } from "@/data/testimonials";
-import { destinations } from "@/data/destinations";
+import { GenericSection, HeroSection } from "@/components/cms/sections";
+import { getPage, hasImage, on, sectionsOf } from "@/cms/content";
+import { getDestinations } from "@/cms/destinations";
+import type { ImageValue } from "@/cms/types";
+import type { Testimonial } from "@/types/content";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
@@ -14,30 +15,55 @@ export const metadata = pageMetadata({
   path: "/success-stories",
 });
 
-export default function SuccessStoriesPage() {
+type Row = {
+  consent: string;
+  studentName: string;
+  destination: string;
+  university: string;
+  programme: string;
+  admissionYear: string;
+  quote: string;
+  photo: ImageValue;
+  videoUrl: string;
+};
+
+/** Content: Admin → Pages → Success Stories. Only stories marked "permission on file" are shown. */
+export default async function SuccessStoriesPage() {
+  const [page, destinations] = await Promise.all([getPage("page:success-stories"), getDestinations()]);
+  const sections = sectionsOf(page);
   return (
     <>
-      <PageHero
-        title="Every journey begins with a dream"
-        description={
-          testimonials.length > 0
-            ? "Real experiences from students and families we've guided, shared with their permission and in their own words."
-            : "Student stories will be shared here with each student's permission."
-        }
-        crumbs={[{ label: "Success Stories", href: "/success-stories" }]}
-      />
-      <Section>
-        <Container>
-          {testimonials.length > 0 ? (
-            <StoriesBrowser testimonials={testimonials} destinations={destinations.map((d) => ({ slug: d.slug, name: d.name }))} />
-          ) : (
-            <div className="mx-auto max-w-3xl">
-              <StoriesEmpty />
-            </div>
-          )}
-        </Container>
-      </Section>
-      <CtaBand title="Your story could be next." description="Start with a free conversation about your goals." />
+      {sections.map((s, i) => {
+        if (s.kind === "hero") return <HeroSection key={s.id} section={s} href="/success-stories" />;
+        if (s.kind !== "storyList") return <GenericSection key={s.id} section={s} prevWhite={i > 0} />;
+        const stories: Testimonial[] = on<Row>(s.data.stories)
+          .filter((r) => r.consent === "yes" && r.studentName && r.quote)
+          .map((r) => ({
+            id: r._id,
+            studentName: r.studentName,
+            destination: r.destination,
+            university: r.university,
+            programme: r.programme,
+            admissionYear: r.admissionYear,
+            quote: r.quote,
+            photo: hasImage(r.photo) ? { src: r.photo.src, alt: r.photo.alt || r.studentName } : undefined,
+            videoUrl: r.videoUrl || undefined,
+            consentOnFile: true,
+          }));
+        return (
+          <Band key={s.id}>
+            <Container>
+              {stories.length > 0 ? (
+                <StoriesBrowser testimonials={stories} destinations={destinations.map((d) => ({ slug: d.slug, name: d.name }))} />
+              ) : (
+                <div className="mx-auto max-w-3xl">
+                  <StoriesEmpty />
+                </div>
+              )}
+            </Container>
+          </Band>
+        );
+      })}
     </>
   );
 }

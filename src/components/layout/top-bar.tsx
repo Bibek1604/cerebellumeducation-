@@ -1,15 +1,16 @@
 import Link from "next/link";
 import { Clock, GraduationCap, Mail, MessageCircle, Phone } from "lucide-react";
-import { siteConfig, whatsappLink } from "@/config/site";
+import { getSiteSettings, whatsappLinkFrom } from "@/cms/content";
 
 /** Slim brand bar above the header. Shows only configured contact details. */
-export function TopBar() {
-  const { phone, phoneHref, email, officeHours } = siteConfig.contact;
-  const wa = whatsappLink("Hello Cerebellum, I'd like free counselling about studying medicine abroad.");
+export async function TopBar() {
+  const { contact } = await getSiteSettings();
+  const { phone, phoneHref, email, officeHours } = contact;
+  const wa = whatsappLinkFrom(contact, "Hello Cerebellum, I'd like free counselling about studying medicine abroad.");
 
   return (
     <div className="bg-brand-gradient hidden text-[0.8rem] text-white/80 md:block">
-      <div className="mx-auto flex h-10 max-w-7xl items-center justify-between gap-6 px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-10 max-w-7xl 2xl:max-w-[88rem] items-center justify-between gap-6 px-4 sm:px-6 lg:px-8">
         <p className="flex items-center gap-2">
           <GraduationCap aria-hidden className="size-4 text-gold" />
           Free counselling for MBBS &amp; medical study abroad

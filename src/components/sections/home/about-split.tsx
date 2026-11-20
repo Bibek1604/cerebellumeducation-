@@ -1,77 +1,102 @@
 import Image from "next/image";
-import { ArrowRight, Check, Compass, Globe, HeartHandshake, UserCheck } from "lucide-react";
-import { Container, Section } from "@/components/ui/container";
+import { ArrowRight } from "lucide-react";
+import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/ui/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { ButtonLink } from "@/components/ui/button";
-import { BrandArc, FoliaArcs } from "@/components/brand/folia";
-import { branding } from "@/config/branding";
+import { CmsIcon } from "@/cms/cms-icon";
+import { Highlight } from "@/cms/highlight";
+import { hasImage, on, visible } from "@/cms/content";
+import type { ImageValue, LinkValue, Section } from "@/cms/types";
+import { cn } from "@/lib/utils";
+import { AboutVideo } from "./about-video";
 
-const pillars = [
-  { icon: UserCheck, title: "Personalised Guidance" },
-  { icon: Globe, title: "International Opportunities" },
-  { icon: Compass, title: "Admission Assistance" },
-  { icon: HeartHandshake, title: "Student-Centred Support" },
-];
+type AboutData = {
+  video: { src: string; poster: ImageValue; caption: string; tag: string };
+  photo: ImageValue;
+  heading: string;
+  description: string;
+  points: unknown;
+  button: LinkValue;
+};
 
-const points = [
-  "Advice built around your grades, goals, budget and family",
-  "Requirements checked against official sources",
-  "Clear explanation of recognition and licensing considerations",
-  "One counsellor from first call to first day on campus",
-];
+/** About: campus video + checklist. Content: Admin → Pages → Homepage → About (video & checklist). */
+export function AboutSplit({ section }: { section: Section }) {
+  const d = section.data as AboutData;
+  const show = visible(section);
+  const video = show("video") && d.video?.src ? d.video : null;
+  const photo = show("photo") && hasImage(d.photo) ? d.photo : null;
+  const media = Boolean(video || photo);
 
-export function AboutSplit() {
   return (
-    <Section>
+    <section className="bg-muted pt-16 pb-14 sm:pt-20 sm:pb-16 lg:pb-20">
       <Container>
-        <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
-          {/* Media block */}
-          <Reveal className="relative">
-            <div className="bg-brand-gradient relative isolate aspect-[5/4.4] overflow-hidden rounded-[2.5rem] p-8 shadow-lift sm:p-10">
-              <FoliaArcs className="absolute -right-24 -bottom-8 -z-10 w-[36rem] text-white/10" rings={8} />
-              <BrandArc className="absolute -top-20 -left-24 -z-10 w-96 opacity-60" strokeWidth={10} />
-              {branding.logo.src && (
-                <div className="inline-flex rounded-2xl bg-white px-5 py-3 shadow-soft">
-                  <Image src={branding.logo.src} alt="" width={branding.logo.width} height={branding.logo.height} quality={100} className="h-12 w-auto" />
+        <div className={cn("grid items-center gap-12 lg:gap-16", media && "lg:grid-cols-2")}>
+          {media && (
+            <Reveal className="relative">
+              {/* Offset tile behind the video, as in a framed media block */}
+              <div aria-hidden className="absolute -top-4 -left-4 h-2/3 w-2/3 rounded-3xl bg-primary-light" />
+              {video ? (
+                <div className={cn("relative", photo && "sm:mr-16 sm:mb-10")}>
+                  <AboutVideo
+                    video={{ src: video.src, poster: hasImage(video.poster) ? video.poster.src : undefined, title: video.caption }}
+                    tag={video.tag}
+                  />
+                </div>
+              ) : (
+                photo && (
+                  <div className="relative overflow-hidden rounded-3xl shadow-lift">
+                    <Image
+                      src={photo.src}
+                      alt={photo.alt}
+                      width={1600}
+                      height={1067}
+                      unoptimized={photo.src.startsWith("/media/")}
+                      sizes="(min-width: 1024px) 40vw, 100vw"
+                      className="aspect-[4/3.1] w-full object-cover"
+                      style={{ objectPosition: photo.position || undefined }}
+                    />
+                  </div>
+                )
+              )}
+              {/* Overlapping second photo */}
+              {video && photo && (
+                <div className="absolute right-0 bottom-0 hidden w-[42%] overflow-hidden rounded-2xl border-[5px] border-white shadow-lift sm:block">
+                  <Image
+                    src={photo.src}
+                    alt={photo.alt}
+                    width={1600}
+                    height={1067}
+                    unoptimized={photo.src.startsWith("/media/")}
+                    sizes="(min-width: 1024px) 18vw, 40vw"
+                    className="aspect-[4/3.3] w-full object-cover"
+                    style={{ objectPosition: photo.position || "70% 50%" }}
+                  />
                 </div>
               )}
-              <ul className="absolute right-8 bottom-8 left-8 grid grid-cols-2 gap-3 sm:right-10 sm:bottom-10 sm:left-10">
-                {pillars.map((p) => (
-                  <li key={p.title} className="flex items-center gap-3 rounded-2xl bg-white/10 p-3.5 ring-1 ring-white/15 backdrop-blur-sm">
-                    <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-gold text-navy">
-                      <p.icon aria-hidden className="size-5" />
-                    </span>
-                    <span className="text-sm leading-tight font-semibold text-white">{p.title}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="absolute -right-3 -bottom-6 hidden rounded-2xl bg-white px-5 py-4 shadow-lift sm:block lg:-right-8">
-              <p className="font-display text-2xl font-extrabold text-primary">Free</p>
-              <p className="text-sm font-semibold text-navy">first consultation</p>
-            </div>
-          </Reveal>
+            </Reveal>
+          )}
 
           <Reveal delay={0.1}>
-            <SectionHeading
-              title="Your Trusted Partner in International Medical Education"
-              description="Choosing where to study medicine is one of the biggest decisions a family makes. We help you make it with clarity, explaining options honestly and guiding you through every step of the admission journey."
-            />
-            <ul className="mt-8 grid gap-3 sm:grid-cols-2">
-              {points.map((p) => (
-                <li key={p} className="flex items-start gap-3 rounded-2xl bg-muted p-4 text-[0.95rem] font-medium text-navy">
-                  <Check aria-hidden className="mt-0.5 size-4.5 shrink-0 text-gold-dark" strokeWidth={3} />
-                  {p}
+            <SectionHeading title={<Highlight text={d.heading} />} description={show("description") && d.description ? d.description : undefined} />
+            <ul className="mt-8 grid gap-4 sm:grid-cols-2">
+              {on<{ icon: string; text: string }>(d.points).map((p) => (
+                <li key={p._id} className="flex items-start gap-3">
+                  <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-white text-primary shadow-soft">
+                    <CmsIcon icon={p.icon} aria-hidden className="size-4.5" />
+                  </span>
+                  <span className="pt-1.5 text-[0.95rem] leading-snug font-medium text-navy">{p.text}</span>
                 </li>
               ))}
             </ul>
-            <ButtonLink href="/about" variant="outline" className="mt-9">
-              More about us <ArrowRight aria-hidden className="size-4" />
-            </ButtonLink>
+            {show("button") && d.button?.label && d.button.href && (
+              <ButtonLink href={d.button.href} variant="outline" className="mt-9">
+                {d.button.label} <ArrowRight aria-hidden className="size-4" />
+              </ButtonLink>
+            )}
           </Reveal>
         </div>
       </Container>
-    </Section>
+    </section>
   );
 }

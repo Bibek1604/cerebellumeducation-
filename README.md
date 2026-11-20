@@ -22,7 +22,6 @@ Nothing has been invented; empty values are hidden on the site. Search the code 
 | Company registration, PAN, approvals | `src/config/site.ts` → `company` (shows on About + footer) |
 | Enquiry email: `RESEND_API_KEY`, `CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL` (or `ENQUIRY_WEBHOOK_URL`) | `.env.local` / hosting env, see `.env.example` |
 | Production URL `NEXT_PUBLIC_SITE_URL` | hosting env |
-| Universities for Bangladesh, India, Philippines; confirm existing list | `src/data/universities.ts` |
 | Verified fees per destination | `src/data/destinations.ts` → `indicativeCosts` |
 | Genuine testimonials (with written consent) | `src/data/testimonials.ts` (home section hidden while empty) |
 | Team members | `src/data/team.ts` (About section hidden while empty) |

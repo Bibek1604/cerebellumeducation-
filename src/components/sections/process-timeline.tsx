@@ -46,9 +46,9 @@ export function ProcessTimeline({ steps }: { steps: ProcessStep[] }) {
                 >
                   <span
                     className={cn(
-                      "relative grid size-14 place-items-center rounded-full border-[3px] font-display text-sm font-extrabold transition-all duration-300",
+                      "relative grid size-14 place-items-center rounded-full border-[3px] font-sans text-sm font-extrabold transition-all duration-300",
                       done ? "border-primary bg-primary text-white" : "border-primary/25 bg-white text-primary",
-                      i === active && "scale-110 border-gold bg-gold text-navy shadow-[0_0_0_8px_var(--brand-secondary-light)]",
+                      i === active && "scale-110 border-gold bg-orange-fill text-white shadow-[0_0_0_8px_var(--brand-secondary-light)]",
                     )}
                   >
                     {pad2(i + 1)}
@@ -77,7 +77,7 @@ export function ProcessTimeline({ steps }: { steps: ProcessStep[] }) {
         />
         {steps.map((s, i) => (
           <li key={s.title} className="relative flex gap-5 pb-8 last:pb-0">
-            <span className="relative z-10 grid size-11 shrink-0 place-items-center rounded-full border-[3px] border-white bg-primary font-display text-xs font-extrabold text-white shadow-soft">
+            <span className="relative z-10 grid size-11 shrink-0 place-items-center rounded-full border-[3px] border-white bg-primary font-sans text-xs font-extrabold text-white shadow-soft">
               {pad2(i + 1)}
             </span>
             <div className="pt-1.5">

@@ -21,10 +21,18 @@ const modes = [
  * the selections pre-filled. Nothing is submitted from here.
  */
 export function CounsellingWidget({
+  title = "Book your free counselling",
+  subtitle = "Three quick choices so we can prepare for your conversation.",
+  buttonLabel = "Continue",
+  notes = ["First consultation is free", "Parents welcome to join", "No documents needed at this stage"],
   programmes,
   destinations,
   intakes,
 }: {
+  title?: string;
+  subtitle?: string;
+  buttonLabel?: string;
+  notes?: string[];
   programmes: ProgrammeOption[];
   destinations: Option[];
   intakes: readonly string[];
@@ -78,9 +86,9 @@ export function CounsellingWidget({
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 id={`${id}-title`} className="text-xl font-extrabold">
-            Book your free counselling
+            {title}
           </h2>
-          <p className="mt-1 text-sm text-ink-soft">Three quick choices so we can prepare for your conversation.</p>
+          {subtitle && <p className="mt-1 text-sm text-ink-soft">{subtitle}</p>}
         </div>
         <fieldset className="inline-flex rounded-full bg-muted p-1">
           <legend className="sr-only">Counselling mode</legend>
@@ -111,7 +119,7 @@ export function CounsellingWidget({
         {steps.map((s, i) => (
           <label key={s.label} className="block">
             <span className="mb-2 flex items-center gap-2 text-sm font-semibold text-navy">
-              <span className="grid size-6 place-items-center rounded-full bg-gold text-xs font-extrabold text-navy">{i + 1}</span>
+              <span className="grid size-6 place-items-center rounded-full bg-orange-fill text-xs font-extrabold text-white">{i + 1}</span>
               {s.label}
               {s.optional && <span className="text-xs font-normal text-ink-soft">(optional)</span>}
             </span>
@@ -132,15 +140,17 @@ export function CounsellingWidget({
           type="submit"
           className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-primary px-6 font-semibold text-white shadow-[0_8px_20px_-8px_var(--brand-primary)] transition-colors hover:bg-primary-dark"
         >
-          Continue <ArrowRight aria-hidden className="size-4" />
+          {buttonLabel} <ArrowRight aria-hidden className="size-4" />
         </button>
       </div>
 
-      <ul className="mt-5 flex flex-wrap gap-x-6 gap-y-2 border-t border-line pt-4 text-xs text-ink-soft">
-        <li>✓ First consultation is free</li>
-        <li>✓ Parents welcome to join</li>
-        <li>✓ No documents needed at this stage</li>
-      </ul>
+      {notes.length > 0 && (
+        <ul className="mt-5 flex flex-wrap gap-x-6 gap-y-2 border-t border-line pt-4 text-xs text-ink-soft">
+          {notes.map((n) => (
+            <li key={n}>✓ {n}</li>
+          ))}
+        </ul>
+      )}
     </form>
   );
 }
