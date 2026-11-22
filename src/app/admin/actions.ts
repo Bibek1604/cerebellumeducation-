@@ -7,8 +7,10 @@ import {
   clearLoginFailures,
   createSession,
   destroySession,
+  envAdminLogin,
   getCurrentAdmin,
   hashPassword,
+  isEnvAdminId,
   loginBlocked,
   passwordProblem,
   recordLoginFailure,
@@ -42,6 +44,25 @@ export async function loginAction(_: LoginState, form: FormData): Promise<LoginS
     return { error: "Too many attempts. Please wait 15 minutes and try again." };
   }
   if (!email || !password) return { error: "Enter your email and password." };
+
+  // The admin set in ADMIN_EMAIL / ADMIN_PASSWORD signs in without touching the database.
+  const envAdmin = envAdminLogin(email, password);
+  if (envAdmin !== undefined) {
+    if (!envAdmin) {
+      recordLoginFailure(key);
+      audit.warn("Sign-in failed: wrong email or password", { admin: email, ip });
+      return { error: "Incorrect email or password." };
+    }
+    clearLoginFailures(key);
+    try {
+      await createSession(envAdmin.id);
+    } catch (err) {
+      log.error("Sign-in failed: could not create a session (check SESSION_SECRET)", { err });
+      return { error: "Sign-in is not set up correctly on the server. Please ask your website administrator to check the SESSION_SECRET setting." };
+    }
+    audit.info("Signed in (environment admin)", { admin: envAdmin.email, ip });
+    redirect("/admin");
+  }
 
   let admin;
   try {
@@ -185,6 +206,9 @@ export async function deleteAdminAction(id: string): Promise<UserFormState> {
 export async function changePasswordAction(_: UserFormState, form: FormData): Promise<UserFormState> {
   const me = await getCurrentAdmin();
   if (!me) redirect("/admin/login");
+  if (isEnvAdminId(me.id)) {
+    return { error: "This account's password is set by ADMIN_PASSWORD in the server's environment (.env). Change it there and restart the website." };
+  }
   const current = String(form.get("current") ?? "");
   const next = String(form.get("next") ?? "");
   try {

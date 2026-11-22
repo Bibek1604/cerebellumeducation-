@@ -110,10 +110,46 @@ async function readSession(): Promise<{ uid: string } | null> {
 
 export type CurrentAdmin = { id: string; email: string; name: string };
 
+/* ──────────────────── Admin account from environment ──────────────────── */
+// ADMIN_EMAIL + ADMIN_PASSWORD (in .env or the host's environment variables)
+// give one admin login that needs no database. Its session id carries a
+// fingerprint of the password, so changing ADMIN_PASSWORD signs it out everywhere.
+
+const ENV_PREFIX = "env:";
+
+function envAdminConfig() {
+  const email = process.env.ADMIN_EMAIL?.trim().toLowerCase();
+  const password = process.env.ADMIN_PASSWORD;
+  if (!email || !password) return null;
+  const fingerprint = createHmac("sha256", "cen-env-admin").update(`${email}\n${password}`).digest("base64url").slice(0, 16);
+  return { id: `${ENV_PREFIX}${fingerprint}`, email, name: process.env.ADMIN_NAME?.trim() || "Administrator", password };
+}
+
+export const isEnvAdminId = (id: string) => id.startsWith(ENV_PREFIX);
+
+/** The env admin if this email is ADMIN_EMAIL, else undefined (use the stored accounts). */
+export function envAdminLogin(email: string, password: string): CurrentAdmin | null | undefined {
+  const cfg = envAdminConfig();
+  if (!cfg || cfg.email !== email) return undefined;
+  const digest = (s: string) => createHmac("sha256", cfg.id).update(s).digest();
+  const ok = timingSafeEqual(digest(password), digest(cfg.password));
+  return ok ? { id: cfg.id, email: cfg.email, name: cfg.name } : null;
+}
+
+/** The env admin shown on the Admin users page, if one is configured. */
+export function envAdminInfo(): CurrentAdmin | null {
+  const cfg = envAdminConfig();
+  return cfg ? { id: cfg.id, email: cfg.email, name: cfg.name } : null;
+}
+
 /** The signed-in admin, or null. Re-checks the account still exists. */
 export async function getCurrentAdmin(): Promise<CurrentAdmin | null> {
   const s = await readSession();
   if (!s) return null;
+  if (isEnvAdminId(s.uid)) {
+    const env = envAdminInfo();
+    return env && env.id === s.uid ? env : null;
+  }
   const a = await findAdmin({ id: s.uid });
   return a ? { id: a.id, email: a.email, name: a.name } : null;
 }

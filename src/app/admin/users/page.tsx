@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { AdminShell } from "@/components/admin/shell";
-import { requireAdmin } from "@/cms/auth";
+import { envAdminInfo, requireAdmin } from "@/cms/auth";
 import { listAdmins } from "@/cms/store";
 import { AddAdminForm, ChangePasswordForm, RemoveAdminButton } from "./user-forms";
 
@@ -17,6 +17,7 @@ export default function UsersPage() {
 async function Users() {
   const me = await requireAdmin();
   const admins = await listAdmins();
+  const envAdmin = envAdminInfo();
   const fmt = (iso: string | null) => (iso ? new Date(iso).toLocaleString("en-GB", { dateStyle: "medium", timeStyle: "short" }) : "Never");
 
   return (
@@ -35,6 +36,15 @@ async function Users() {
             </tr>
           </thead>
           <tbody className="divide-y divide-line">
+            {envAdmin && (
+              <tr>
+                <td className="px-4 py-3 font-semibold text-navy">
+                  {envAdmin.name} {envAdmin.id === me.id && <span className="ml-1 rounded-full bg-primary-light px-2 py-0.5 text-xs text-primary">You</span>}
+                </td>
+                <td className="px-4 py-3 text-ink">{envAdmin.email}</td>
+                <td className="px-4 py-3 text-ink-soft" colSpan={2}>Set in the server&apos;s .env (ADMIN_EMAIL / ADMIN_PASSWORD)</td>
+              </tr>
+            )}
             {admins.map((a) => (
               <tr key={a.id}>
                 <td className="px-4 py-3 font-semibold text-navy">
