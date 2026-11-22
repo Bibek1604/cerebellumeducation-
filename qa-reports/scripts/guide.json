@@ -1,0 +1,44 @@
+{
+  "before": [
+    "Ask the project owner for: (1) the live website address, (2) a test admin account made just for you, (3) access to the inbox that receives website enquiries.",
+    "Use Chrome on a computer, plus one phone. Keep the Excel workbook open beside the browser.",
+    "Never type real student names, phone numbers or emails. Use names like 'TEST Ram' and emails like test+1@yourcompany.com.",
+    "Take a screenshot for every Fail (Windows: Win+Shift+S). Save it as TestID_short-name.png (for example FT-046_blog-not-found.png) and write the file name in the Remarks column.",
+    "Do not delete or change real content. When you test editing, add a new TEST item, check it, then delete it again."
+  ],
+  "bug": [
+    "Something different from the 'Expected Result' column happens.",
+    "You see 'Something went wrong', a blank page, a spinning loader that never ends, or a 500 error.",
+    "A page says 'Saved' but the change is not on the website after a refresh.",
+    "Anything you typed in a form appears on the site as code, or a pop-up appears that you did not expect.",
+    "You can open an /admin page without signing in."
+  ],
+  "record": [
+    "Status column: Pass, Fail, Blocked (you could not test it — say why in Remarks) or Not Tested.",
+    "Actual Result: write exactly what you saw, in one or two sentences.",
+    "For a Fail: add a new row in 'Bug Reports' (next Bug ID, title, steps, what you expected, what happened, screenshot name) and put that Bug ID in the test row.",
+    "After a developer fixes a bug: re-run the test, set 'Retest Status' to Pass or Fail, and add a row in 'Retesting and Regression'."
+  ],
+  "steps": [
+    {"n": 1, "where": "Live site → homepage (/)", "do": "Open the homepage. Scroll slowly from top to bottom.", "data": "-", "verify": "Menu, hero, sections, footer all show. No broken pictures. Reels / Videos / Blog sections only appear if items were added.", "bug": "Broken image, overlapping text, error page."},
+    {"n": 2, "where": "Every page in the top menu and footer", "do": "Click each menu and footer link once.", "data": "-", "verify": "Each page opens with its own title and content.", "bug": "'Page not found' or an error on a real link."},
+    {"n": 3, "where": "Phone (or Chrome DevTools → phone view)", "do": "Repeat steps 1–2 on a phone. Open the ☰ menu.", "data": "-", "verify": "No sideways scrolling, text readable, buttons easy to tap.", "bug": "Page wider than the screen, cut-off text."},
+    {"n": 4, "where": "/contact", "do": "Click Send with the form empty.", "data": "(empty)", "verify": "A red message under every required field. Nothing is sent.", "bug": "Form sends, or no messages."},
+    {"n": 5, "where": "/contact", "do": "Fill the form with bad data and click Send.", "data": "Email: abc   Phone: hello   Message: hi", "verify": "'Please enter a valid email address', phone and message errors.", "bug": "Bad data accepted."},
+    {"n": 6, "where": "/contact", "do": "Fill the form correctly and send.", "data": "Name: TEST Ram, Phone: +977 9800000000, Email: test+1@yourcompany.com, Subject: TEST, Message: This is a test message, tick consent", "verify": "Success message on screen AND the email arrives in the office inbox with all fields.", "bug": "Error message, or nothing arrives in the inbox within 5 minutes."},
+    {"n": 7, "where": "/book-counselling", "do": "Repeat steps 4–6. Choose a programme, then check only countries offering it are allowed.", "data": "Programme: MBBS, Country: China, Mode: Online", "verify": "Validation messages for bad data; success + inbox email for good data.", "bug": "A programme/country pair that is not offered is accepted."},
+    {"n": 8, "where": "/admin (signed out)", "do": "Type the address /admin in the browser without signing in.", "data": "-", "verify": "You are sent to the login page.", "bug": "Any admin page opens."},
+    {"n": 9, "where": "/admin/login", "do": "Sign in with a wrong password.", "data": "Your test email + wrong password", "verify": "'Incorrect email or password.'", "bug": "Signs in, or says the email doesn't exist."},
+    {"n": 10, "where": "/admin/login", "do": "Sign in with your test account.", "data": "Test email + password", "verify": "Dashboard 'Welcome, …' with Pages and Shared content cards.", "bug": "Error or blank page."},
+    {"n": 11, "where": "Admin → Shared content → Reels", "do": "Click 'Add reel'. Enter a title and a TikTok or Facebook reel link. Click Save. Open the homepage in a new tab and refresh.", "data": "Title: TEST reel   Link: a real public reel link starting https://", "verify": "'Saved'. The homepage 'Reels' section shows the card with 'Watch on TikTok/Facebook'; clicking it opens the reel in a new tab.", "bug": "Card missing, wrong platform name, link goes elsewhere."},
+    {"n": 12, "where": "Admin → Reels", "do": "Add a reel whose link has no https:// and Save.", "data": "Link: tiktok.com/@x/video/1", "verify": "Expected: a warning that the link is invalid. Known bug BUG-005: it says Saved and the reel silently disappears.", "bug": "Record what happens against BUG-005."},
+    {"n": 13, "where": "Admin → Videos", "do": "Add a YouTube video link and Save. Open /videos.", "data": "https://www.youtube.com/watch?v=…", "verify": "The video plays inside the page.", "bug": "Blank player or error."},
+    {"n": 14, "where": "Admin → Blog posts", "do": "Add a post: title, date, summary, two paragraphs. Leave 'Web address' empty. Save. Open /blog, then click the post.", "data": "Title: TEST post, Date: today (YYYY-MM-DD)", "verify": "Post appears first on /blog and its page shows the text. Known bug BUG-003: the very first open may say 'This page has moved on' — refresh once and note it.", "bug": "Post never appears, or still 'moved on' after refresh."},
+    {"n": 15, "where": "Admin → Pages → Homepage", "do": "Untick 'Show on website' on one section, Save, check the homepage; then tick it again and Save.", "data": "-", "verify": "Section disappears, then comes back.", "bug": "No change on the site."},
+    {"n": 16, "where": "Any image field (e.g. Reels → Cover picture)", "do": "Upload a JPG under 5 MB; then try a PDF and a file over 5 MB.", "data": "photo.jpg, any .pdf, a large photo", "verify": "JPG uploads and shows. PDF: 'Use a JPG, PNG, WebP, AVIF or GIF image.' Large: 'Images must be 5 MB or smaller.'", "bug": "PDF/large file accepted."},
+    {"n": 17, "where": "Any text field in the Admin Panel", "do": "Type this into a title, Save, and view the site.", "data": "<script>alert(1)</script>", "verify": "The text appears literally on the page. No pop-up.", "bug": "A pop-up appears (serious — stop and report)."},
+    {"n": 18, "where": "Admin → Admin users", "do": "Change your password with a wrong current password; then with a weak new one; then correctly.", "data": "New password: at least 10 characters with letters and numbers", "verify": "Clear error for the first two; 'Password changed.' for the last; old password stops working.", "bug": "Wrong current password accepted."},
+    {"n": 19, "where": "Sidebar → Log out", "do": "Log out, then press the browser Back button and refresh.", "data": "-", "verify": "You are on the login page, admin content not shown.", "bug": "Admin pages still usable."},
+    {"n": 20, "where": "Clean-up", "do": "Delete every TEST reel, video and post you created, Save each list, and check the site again.", "data": "-", "verify": "No TEST items remain on the live site.", "bug": "-"}
+  ]
+}
