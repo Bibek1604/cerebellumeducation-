@@ -6,6 +6,7 @@ import { branding } from "@/config/branding";
 import { homeFaqs } from "@/data/faqs";
 import { services } from "@/data/process";
 import { globalSources } from "@/data/sources";
+import { homeMediaDefaults, homeMediaSpecs } from "./schema-media";
 import type { FieldSpec, PageContent, Section, SectionSpec } from "./types";
 
 let seq = 0;
@@ -262,6 +263,7 @@ export const homeSpecs: SectionSpec[] = [
     description: "Counsellor cards. Shown only when counsellors are added under Team.",
     fields: headingFields(),
   },
+  ...homeMediaSpecs,
   {
     kind: "homeFaq",
     label: "FAQs",
@@ -468,6 +470,9 @@ export const homeDefaults = (): PageContent => ({
       heading: "Meet Your *Counsellors*",
       description: "The people who will guide you, from your first conversation to your first day on campus.",
     }),
+    section("homeReels", structuredClone(homeMediaDefaults.homeReels!)),
+    section("homeVideos", structuredClone(homeMediaDefaults.homeVideos!)),
+    section("homeBlog", structuredClone(homeMediaDefaults.homeBlog!)),
     section("homeFaq", {
       heading: "Questions families *ask us most*",
       description: "Requirements differ between countries, universities and home-country regulators. These answers explain the general picture.",

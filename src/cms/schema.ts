@@ -25,6 +25,7 @@ import {
 import { destinationPageDefaults, destinationPageSpec, destinationsDefaults, destinationsListDefaults, destinationsListSpecs, destinationsSpec } from "./schema-destinations";
 import { team } from "@/data/team";
 import { indiaGuidance, nepalGuidance } from "@/data/nepal-guidance";
+import { blogDefaults, blogSpec, reelsDefaults, reelsSpec, videosDefaults, videosSpec } from "./schema-media";
 import type { ContentKey, FieldSpec, PageContent, Section, SectionSpec, SettingsContent } from "./types";
 
 let seq = 0;
@@ -787,6 +788,30 @@ export const settings: SettingsEntry[] = [
     description: "'Before you apply' rules box on the Admission Process, programme and destination pages.",
     fields: guidanceSpec,
     defaults: guidanceDefaults,
+  },
+  {
+    type: "settings",
+    key: "settings:reels",
+    title: "Reels",
+    description: "Facebook, TikTok and Instagram reels: a title and a link for each, shown on the homepage.",
+    fields: reelsSpec,
+    defaults: reelsDefaults,
+  },
+  {
+    type: "settings",
+    key: "settings:videos",
+    title: "Videos",
+    description: "YouTube, Vimeo or Facebook videos for the homepage and the /videos page.",
+    fields: videosSpec,
+    defaults: videosDefaults,
+  },
+  {
+    type: "settings",
+    key: "settings:blog",
+    title: "Blog posts",
+    description: "Articles for the /blog page and the 'From our blog' section on the homepage.",
+    fields: blogSpec,
+    defaults: blogDefaults,
   },
 ];
 

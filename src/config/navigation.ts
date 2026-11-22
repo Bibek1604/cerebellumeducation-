@@ -20,6 +20,8 @@ export const footerNav = {
     { label: "Study Destinations", href: "/destinations" },
     { label: "Programmes", href: "/programs" },
     { label: "Scholarships", href: "/scholarships" },
+    { label: "Blog", href: "/blog" },
+    { label: "Videos", href: "/videos" },
   ],
   support: [
     { label: "Admission Process", href: "/admission-process" },

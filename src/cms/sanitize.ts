@@ -188,15 +188,16 @@ export function sanitizeSettings(entry: SettingsEntry, input: unknown): Settings
   const data = cleanFields(entry.fields, raw.data);
   if (entry.key === "settings:destinations") uniqueSlugs(data.countries);
   if (entry.key === "settings:programmes") uniqueSlugs(data.list);
+  if (entry.key === "settings:blog") uniqueSlugs(data.posts, "title", "post");
   return { version: 1, hidden: cleanHidden(entry.fields, raw.hidden), data };
 }
 
 /** Every country needs its own web address: fill empty ones from the name and de-duplicate. */
-function uniqueSlugs(list: unknown) {
+function uniqueSlugs(list: unknown, nameKey = "name", fallback = "country") {
   if (!Array.isArray(list)) return;
   const seen = new Set<string>();
   for (const c of list as Record<string, string>[]) {
-    let base = c.slug || String(c.name ?? "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "country";
+    let base = c.slug || String(c[nameKey] ?? "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || fallback;
     base = base.slice(0, 60);
     let slug = base;
     for (let n = 2; seen.has(slug); n++) slug = `${base}-${n}`;

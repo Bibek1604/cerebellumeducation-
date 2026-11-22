@@ -87,4 +87,7 @@ export type ContentKey =
   | "settings:site"
   | "settings:team"
   | "settings:steps"
-  | "settings:guidance";
+  | "settings:guidance"
+  | "settings:reels"
+  | "settings:videos"
+  | "settings:blog";

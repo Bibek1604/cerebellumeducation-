@@ -10,6 +10,7 @@ import { ProcessSection } from "@/components/sections/home/process-section";
 import { TeamSection, teamWillRender } from "@/components/sections/home/team-section";
 import { FaqPreview } from "@/components/sections/home/faq-preview";
 import { VerifyStrip } from "@/components/sections/home/verify-strip";
+import { BlogSection, mediaWillRender, ReelsSection, VideosSection } from "@/components/sections/home/media-sections";
 import { GenericSection } from "@/components/cms/sections";
 import { getPage, getSteps, sectionsOf } from "@/cms/content";
 import type { Section } from "@/cms/types";
@@ -41,10 +42,17 @@ const FIXED_BG: Record<string, Tone | "blue"> = {
 /** Content is managed in Admin → Pages → Homepage. */
 export default async function HomePage() {
   const page = await getPage("page:home");
-  const [hasTeam, steps] = await Promise.all([teamWillRender(), getSteps()]);
+  const [hasTeam, steps, hasReels, hasVideos, hasPosts] = await Promise.all([
+    teamWillRender(),
+    getSteps(),
+    mediaWillRender("homeReels"),
+    mediaWillRender("homeVideos"),
+    mediaWillRender("homeBlog"),
+  ]);
+  const willRender: Record<string, boolean> = { homeTeam: hasTeam, homeProcess: steps.length > 0, homeReels: hasReels, homeVideos: hasVideos, homeBlog: hasPosts };
 
   // Skip sections that would render nothing, so the white/grey rhythm stays correct.
-  const sections = sectionsOf(page).filter((s) => (s.kind === "homeTeam" ? hasTeam : s.kind === "homeProcess" ? steps.length > 0 : true));
+  const sections = sectionsOf(page).filter((s) => willRender[s.kind] ?? true);
 
   const plan = planTones(sections);
   return (
@@ -91,6 +99,12 @@ function HomeSection({ section, tone, prevWhite }: { section: Section; tone: Ton
       return <ProcessSection section={section} tone={tone} />;
     case "homeTeam":
       return <TeamSection section={section} tone={tone} />;
+    case "homeReels":
+      return <ReelsSection section={section} tone={tone} />;
+    case "homeVideos":
+      return <VideosSection section={section} tone={tone} />;
+    case "homeBlog":
+      return <BlogSection section={section} tone={tone} />;
     case "homeFaq":
       return <FaqPreview section={section} tone={tone} />;
     case "homeVerify":
