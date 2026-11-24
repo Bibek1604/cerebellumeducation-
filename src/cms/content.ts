@@ -15,25 +15,38 @@ import type { ContentKey, ImageValue, ListItem, PageContent, Section, SettingsCo
 /**
  * Public read access to admin-managed content.
  * Cached and tagged per key; saving in the Admin Panel calls updateTag so the
- * change appears on the next request. If storage is unavailable (e.g. the
- * database is not configured or down), the built-in defaults are used so the
- * website never breaks.
+ * change appears on the next request. If storage is unavailable, the last
+ * content that was read is used, else the built-in defaults, so the website
+ * never breaks.
  */
 
 export const contentTag = (key: ContentKey) => `cms:${key}`;
 
+/**
+ * Tags only live in the memory of the server process that handled the save, so
+ * they miss restarts, redeploys and other processes (PM2 cluster, cPanel).
+ * These short times make every page check storage again by itself:
+ *  - stale: an open browser tab reuses a page for 30 s (the minimum)
+ *  - revalidate: the server refreshes a visited page after 5 s
+ *  - expire: a page nobody visited for an hour is rebuilt before it is shown
+ */
+const CONTENT_LIFE = { stale: 30, revalidate: 5, expire: 3600 };
+
+/** Last content read per key in this process, for when storage is briefly unreachable. */
+const lastGood = new Map<ContentKey, unknown>();
+
 async function load(key: ContentKey) {
   "use cache";
   cacheTag(contentTag(key));
+  cacheLife(CONTENT_LIFE);
   try {
     const data = (await readContent(key))?.data ?? null;
-    cacheLife("max");
+    lastGood.set(key, data);
     return data;
   } catch (e) {
-    // Storage unreachable: serve defaults, but retry soon instead of caching the failure.
-    cacheLife("minutes");
-    log.error("Could not read content, showing built-in defaults", { key, err: e });
-    return null;
+    const known = lastGood.has(key);
+    log.error(known ? "Could not read content, showing the last known version" : "Could not read content, showing built-in defaults", { key, err: e });
+    return known ? lastGood.get(key) : null;
   }
 }
 

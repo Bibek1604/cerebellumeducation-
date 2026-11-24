@@ -1,8 +1,9 @@
 "use server";
 
-import { updateTag } from "next/cache";
+import { revalidateTag, updateTag } from "next/cache";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { after } from "next/server";
 import {
   clearLoginFailures,
   createSession,
@@ -108,6 +109,19 @@ function assertKey(key: string): ContentKey | null {
   return getEntry(key) ? (key as ContentKey) : null;
 }
 
+/**
+ * Makes a change live. A page that was already being rendered when the change
+ * was saved can finish afterwards and store the old content, so the tag is
+ * expired once more when such renders are done.
+ */
+function publish(key: ContentKey) {
+  updateTag(contentTag(key));
+  after(async () => {
+    await new Promise((r) => setTimeout(r, 2_000));
+    revalidateTag(contentTag(key), { expire: 0 });
+  });
+}
+
 export async function saveContentAction(key: string, json: string): Promise<SaveResult> {
   const admin = await requireAdmin();
   const k = assertKey(key);
@@ -124,7 +138,7 @@ export async function saveContentAction(key: string, json: string): Promise<Save
   try {
     const clean = sanitizeFor(k, parsed);
     await writeContent(k, clean, admin.email);
-    updateTag(contentTag(k));
+    publish(k);
     audit.info("Content saved", { by: admin.email, key: k });
     return { ok: true, content: clean, updatedAt: new Date().toISOString() };
   } catch (err) {
@@ -139,7 +153,7 @@ export async function resetContentAction(key: string): Promise<SaveResult> {
   if (!k) return { ok: false, error: "This content type doesn't exist. Please reload the page." };
   try {
     await deleteContent(k);
-    updateTag(contentTag(k));
+    publish(k);
     audit.info("Content restored to original", { by: admin.email, key: k });
     return { ok: true, content: getEntry(k)!.defaults(), updatedAt: "" };
   } catch (err) {
