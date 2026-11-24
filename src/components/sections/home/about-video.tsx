@@ -16,7 +16,17 @@ export function AboutVideo({ video, tag = "Study medicine abroad" }: { video?: {
     const v = ref.current;
     if (!v) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    v.play().then(() => setPlaying(true)).catch(() => setPlaying(false));
+    // The file is several MB: download and play it only when visitors reach it.
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry?.isIntersecting) return;
+        observer.disconnect();
+        v.play().then(() => setPlaying(true)).catch(() => setPlaying(false));
+      },
+      { threshold: 0.35 },
+    );
+    observer.observe(v);
+    return () => observer.disconnect();
   }, []);
 
   function toggle() {
@@ -51,7 +61,7 @@ export function AboutVideo({ video, tag = "Study medicine abroad" }: { video?: {
           muted
           loop
           playsInline
-          preload="metadata"
+          preload="none"
           aria-label={video?.title ?? "Students walking and talking in a university hallway"}
         />
       )}

@@ -131,7 +131,7 @@ export async function HomeHero({ section }: { section: Section }) {
                   width={573}
                   height={820}
                   priority
-                  unoptimized
+                  sizes="(min-width: 1024px) 36rem, 1px"
                   className="absolute bottom-0 left-1/2 h-full w-auto max-w-none -translate-x-1/2 drop-shadow-[0_24px_30px_rgb(18_58_107/0.25)]"
                   style={{ objectPosition: photo.position || undefined }}
                 />

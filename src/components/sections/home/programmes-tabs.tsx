@@ -48,7 +48,7 @@ export function ProgrammesTabs({
             className="relative grid items-center gap-0 md:grid-cols-[0.9fr_1.1fr]"
           >
             <div className="overflow-hidden rounded-3xl shadow-lift">
-              <Image src={p.photo.src} alt={p.photo.alt} width={1600} height={1067} unoptimized={p.photo.src.startsWith("/media/")} sizes="(min-width: 1024px) 30vw, 100vw" className="aspect-[4/4.2] w-full object-cover" />
+              <Image src={p.photo.src} alt={p.photo.alt} width={1600} height={1067} sizes="(min-width: 1024px) 30vw, 100vw" className="aspect-[4/4.2] w-full object-cover" />
             </div>
             <div className="relative -mt-16 mx-4 rounded-3xl border border-line bg-white p-6 shadow-lift sm:p-8 md:mx-0 md:mt-0 md:-ml-16">
               <span className="inline-flex rounded-md bg-primary-light px-2.5 py-1 text-[0.7rem] font-bold tracking-[0.12em] text-primary uppercase">{p.category}</span>

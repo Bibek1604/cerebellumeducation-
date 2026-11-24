@@ -70,7 +70,6 @@ export function WhyCerebellum({ section, tone }: { section: CmsSection; tone: "w
                       alt={c.image.alt}
                       width={1600}
                       height={1200}
-                      unoptimized={c.image.src.startsWith("/media/")}
                       sizes="(min-width: 1024px) 50vw, 100vw"
                       className="aspect-[16/10] w-full object-cover"
                       style={{ objectPosition: c.image.position || undefined }}

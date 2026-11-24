@@ -48,10 +48,6 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${jakarta.variable} ${lora.variable}`} suppressHydrationWarning>
       <body className="flex min-h-dvh flex-col" suppressHydrationWarning>
-        {/* Without JavaScript, scroll-reveal content must still be visible. */}
-        <noscript>
-          <style>{`[data-reveal]{opacity:1!important;transform:none!important}`}</style>
-        </noscript>
         <JsonLd data={[organizationJsonLd(settings), websiteJsonLd()]} />
         <MotionProvider>
           <SiteContactProvider value={{ phone, phoneHref, email, whatsapp }}>

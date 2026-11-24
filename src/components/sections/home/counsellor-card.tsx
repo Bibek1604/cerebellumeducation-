@@ -44,7 +44,7 @@ export function CounsellorCard({ member: m, placeholder }: { member: TeamMember;
           <span aria-hidden className="absolute -top-3 -left-3 h-3/4 w-3/4 rounded-tl-2xl border-t-4 border-l-4 border-gold" />
           <span aria-hidden className="absolute -right-3 -bottom-3 h-3/4 w-3/4 rounded-br-2xl border-r-4 border-b-4 border-primary" />
           {m.photo ? (
-            <Image src={m.photo.src} alt={m.photo.alt} width={384} height={384} unoptimized={m.photo.src.startsWith("/media/")} className="relative size-full rounded-2xl bg-white object-cover shadow-lift" />
+            <Image src={m.photo.src} alt={m.photo.alt} width={384} height={384} className="relative size-full rounded-2xl bg-white object-cover shadow-lift" />
           ) : (
             <span className="relative grid size-full place-items-center rounded-2xl bg-gradient-to-br from-primary-light to-sky-light font-display text-4xl font-bold text-primary shadow-lift">
               {initials(m.name)}

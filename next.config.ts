@@ -14,11 +14,24 @@ const nextConfig: NextConfig = {
   partialPrefetching: true,
   poweredByHeader: false,
   images: {
-    formats: ["image/avif", "image/webp"],
+    // WebP only: AVIF takes the server many times longer to create, and the first visitor waits for it.
+    formats: ["image/webp"],
+    // Keep converted images for 31 days. Uploads get a new file name each time, so they never go stale.
+    minimumCacheTTL: 2678400,
     qualities: [75, 100],
   },
   async headers() {
-    return [{ source: "/(.*)", headers: securityHeaders }];
+    return [
+      { source: "/(.*)", headers: securityHeaders },
+      // Browsers, CDNs and proxies must ask the server for pages every time, or Admin Panel changes would show late.
+      // Files (anything with a dot, /_next, /media), the API and the Admin Panel keep their own caching rules.
+      {
+        source: "/((?!_next/|api/|admin|media/|opengraph-image|.*[.]).*)",
+        headers: [{ key: "Cache-Control", value: "public, max-age=0, s-maxage=0, must-revalidate" }],
+      },
+      // Bundled pictures and videos: browsers keep them for a week.
+      { source: "/:dir(images|videos|logos)/:path*", headers: [{ key: "Cache-Control", value: "public, max-age=604800" }] },
+    ];
   },
   turbopack: {
     rules: {

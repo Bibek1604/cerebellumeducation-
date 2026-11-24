@@ -28,7 +28,6 @@ export function DestinationArt({
           alt={destination.image.alt}
           fill
           priority={priority}
-          unoptimized={destination.image.src.startsWith("/media/")}
           sizes={
             size === "hero"
               ? "(min-width: 1024px) 50vw, 100vw"

@@ -165,7 +165,6 @@ async function AboutSection({ section, prevWhite }: { section: Section; prevWhit
                       alt={m.photo.alt}
                       width={160}
                       height={160}
-                      unoptimized={m.photo.src.startsWith("/media/")}
                       className="mx-auto size-28 rounded-full object-cover"
                     />
                   ) : (

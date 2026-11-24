@@ -51,7 +51,6 @@ export function AboutSplit({ section }: { section: Section }) {
                       alt={photo.alt}
                       width={1600}
                       height={1067}
-                      unoptimized={photo.src.startsWith("/media/")}
                       sizes="(min-width: 1024px) 40vw, 100vw"
                       className="aspect-[4/3.1] w-full object-cover"
                       style={{ objectPosition: photo.position || undefined }}
@@ -67,7 +66,6 @@ export function AboutSplit({ section }: { section: Section }) {
                     alt={photo.alt}
                     width={1600}
                     height={1067}
-                    unoptimized={photo.src.startsWith("/media/")}
                     sizes="(min-width: 1024px) 18vw, 40vw"
                     className="aspect-[4/3.3] w-full object-cover"
                     style={{ objectPosition: photo.position || "70% 50%" }}

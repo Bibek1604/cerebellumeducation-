@@ -38,7 +38,6 @@ export async function OfficeSection({ section }: { section: CmsSection }) {
 
   const [main, ...rest] = photos;
   const address = c.address && [c.address.line1, c.address.line2, c.address.city, c.address.country].filter(Boolean).join(", ");
-  const up = (src: string) => src.startsWith("/media/");
 
   return (
     <Section>
@@ -58,7 +57,6 @@ export async function OfficeSection({ section }: { section: CmsSection }) {
                     alt={main.image.alt}
                     width={1600}
                     height={1000}
-                    unoptimized={up(main.image.src)}
                     sizes="(min-width: 1024px) 50vw, 100vw"
                     className="aspect-[16/9] w-full object-cover"
                     style={{ objectPosition: main.image.position || undefined }}
@@ -74,7 +72,6 @@ export async function OfficeSection({ section }: { section: CmsSection }) {
                       alt={p.image.alt}
                       width={800}
                       height={600}
-                      unoptimized={up(p.image.src)}
                       sizes="(min-width: 1024px) 25vw, 50vw"
                       className="aspect-[4/3] w-full object-cover"
                       style={{ objectPosition: p.image.position || undefined }}

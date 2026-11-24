@@ -80,7 +80,6 @@ function HeroDisc({ image, badge }: { image: NonNullable<Parameters<typeof PageH
             fill
             priority
             sizes="(min-width: 1024px) 26rem, 80vw"
-            unoptimized={image.src.startsWith("/media/")}
             className="object-cover"
             style={{ objectPosition: image.position ?? "center" }}
           />
