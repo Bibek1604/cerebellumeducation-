@@ -6,7 +6,7 @@ import { embedUrl, platformOf, thumbnailOf } from "@/lib/video";
 
 /** Reels, videos and blog posts (Admin → Reels / Videos / Blog posts). */
 
-export type Reel = { id: string; title: string; url: string; platform: SocialPlatform; thumbnail: ImageValue | null };
+export type Reel = { id: string; title: string; url: string; platform: SocialPlatform; embed: string | null; thumbnail: ImageValue | null };
 export type Video = { id: string; title: string; url: string; embed: string | null; thumbnail: string | null; description: string | null };
 export type PostBlock = { heading: string | null; text: string };
 export type Post = {
@@ -29,6 +29,8 @@ export async function getReels(): Promise<Reel[]> {
       title: r.title,
       url: r.url,
       platform: platformOf(r.url),
+      // Facebook's player is made for wide videos, so Facebook reels keep the cover that links out.
+      embed: platformOf(r.url) === "facebook" ? null : embedUrl(r.url),
       thumbnail: show("reels.thumbnail") && hasImage(r.thumbnail) ? r.thumbnail : null,
     }));
 }

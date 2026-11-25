@@ -3,9 +3,20 @@ import { ArrowUpRight, Play } from "lucide-react";
 import { SocialIcon } from "@/components/brand/social-icon";
 import type { Reel } from "@/cms/media";
 import { platformName } from "@/lib/video";
+import { AutoplayEmbed } from "./autoplay-embed";
 
-/** A portrait reel card: cover (or brand gradient), platform badge, title, opens the reel on its platform. */
+/** A reel that plays by itself (TikTok / YouTube / Vimeo), otherwise a cover that opens it on its platform. */
 export function ReelCard({ reel }: { reel: Reel }) {
+  if (!reel.embed) return <ReelCover reel={reel} />;
+  return (
+    <AutoplayEmbed embed={reel.embed} title={reel.title} className="relative isolate aspect-[9/16] overflow-hidden rounded-3xl bg-navy shadow-soft">
+      <ReelCover reel={reel} />
+    </AutoplayEmbed>
+  );
+}
+
+/** Portrait cover (or brand gradient), platform badge and title, linking to the reel. */
+function ReelCover({ reel }: { reel: Reel }) {
   const where = platformName[reel.platform];
   return (
     <a

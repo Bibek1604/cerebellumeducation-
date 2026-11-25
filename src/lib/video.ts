@@ -38,7 +38,7 @@ export const platformName: Record<SocialPlatform, string> = {
 };
 
 /**
- * Turns a normal YouTube, Vimeo or Facebook video link into an embeddable
+ * Turns a normal YouTube, Vimeo, Facebook or TikTok video link into an embeddable
  * player URL. Returns null when the link can't be embedded (it is then shown
  * as a "watch" link instead).
  */
@@ -61,8 +61,49 @@ export function embedUrl(url: string): string | null {
     const v = u.pathname.match(/(\d{6,12})/)?.[1];
     return v ? `https://player.vimeo.com/video/${v}` : null;
   }
+  if (h === "tiktok.com") {
+    const v = u.pathname.match(/\/video\/(\d{10,25})/)?.[1];
+    return v ? `https://www.tiktok.com/player/v1/${v}` : null;
+  }
   if (h.endsWith("facebook.com") || h === "fb.watch") {
     return `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(url)}&show_text=false`;
+  }
+  return null;
+}
+
+/** The same player link, set to start by itself without sound and repeat. */
+export function autoplayUrl(embed: string): string {
+  const u = parse(embed);
+  if (!u) return embed;
+  const h = host(u);
+  const set = (o: Record<string, string>) => Object.entries(o).forEach(([k, v]) => u.searchParams.set(k, v));
+  if (h === "youtube.com" || h === "youtube-nocookie.com") {
+    const v = u.pathname.split("/").pop() ?? "";
+    set({ autoplay: "1", mute: "1", playsinline: "1", rel: "0", loop: "1", playlist: v, enablejsapi: "1" });
+  } else if (h === "player.vimeo.com") {
+    set({ autoplay: "1", muted: "1", playsinline: "1", loop: "1" });
+  } else if (h === "facebook.com") {
+    set({ autoplay: "true", mute: "true" });
+  } else if (h === "tiktok.com") {
+    set({ autoplay: "1", muted: "1", loop: "1", rel: "0" });
+  }
+  return u.toString();
+}
+
+/** Messages each player understands. `start` is sent when the player reports it is ready. */
+export function playerCommands(embed: string): { play: unknown[]; pause: unknown[]; start?: unknown[] } | null {
+  const u = parse(embed);
+  const h = u ? host(u) : "";
+  if (h === "youtube.com" || h === "youtube-nocookie.com") {
+    const yt = (func: string) => [JSON.stringify({ event: "command", func, args: [] })];
+    return { play: yt("playVideo"), pause: yt("pauseVideo") };
+  }
+  if (h === "player.vimeo.com") {
+    return { play: [JSON.stringify({ method: "play" })], pause: [JSON.stringify({ method: "pause" })] };
+  }
+  if (h === "tiktok.com") {
+    const tt = (type: string) => ({ type, value: null, "x-tiktok-player": true });
+    return { play: [tt("play")], pause: [tt("pause")], start: [tt("mute"), tt("play")] };
   }
   return null;
 }

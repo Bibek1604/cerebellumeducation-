@@ -2,13 +2,14 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Pause, Play } from "lucide-react";
+import { AutoplayEmbed } from "@/components/media/autoplay-embed";
 
 /**
  * Looping, muted campus video with a pause/play control.
  * Starts paused for visitors who prefer reduced motion.
  */
 export function AboutVideo({ video, tag = "Study medicine abroad" }: { video?: { src: string; poster?: string; title: string } | null; tag?: string }) {
-  const isEmbed = Boolean(video?.src.includes("youtube.com/embed") || video?.src.includes("player.vimeo.com"));
+  const isEmbed = Boolean(/youtube(-nocookie)?\.com\/embed/.test(video?.src ?? "") || video?.src.includes("player.vimeo.com"));
   const ref = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(false);
 
@@ -44,14 +45,7 @@ export function AboutVideo({ video, tag = "Study medicine abroad" }: { video?: {
   return (
     <div className="relative overflow-hidden rounded-3xl bg-navy shadow-lift">
       {isEmbed && video ? (
-        <iframe
-          src={video.src}
-          title={video.title}
-          className="aspect-[4/3.1] w-full"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-          loading="lazy"
-        />
+        <AutoplayEmbed embed={video.src} title={video.title} className="relative aspect-[4/3.1] w-full" />
       ) : (
         <video
           ref={ref}

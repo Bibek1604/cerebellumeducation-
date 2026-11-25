@@ -1,32 +1,30 @@
 import { ArrowUpRight, Play } from "lucide-react";
 import type { Video } from "@/cms/media";
+import { AutoplayEmbed } from "./autoplay-embed";
 
-/** A 16:9 video: an embedded player for YouTube / Vimeo / Facebook, otherwise a link out. */
+/** A 16:9 video that plays by itself (YouTube / Vimeo / Facebook / TikTok), otherwise a link out. */
 export function VideoCard({ video }: { video: Video }) {
+  const cover = (
+    <a
+      href={video.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="bg-hero-vivid grid aspect-video w-full place-items-center text-white"
+      aria-label={`Watch ${video.title} (opens in a new tab)`}
+    >
+      <span className="grid size-16 place-items-center rounded-full bg-white/25 ring-1 ring-white/50">
+        <Play aria-hidden className="size-7 translate-x-0.5 fill-white" />
+      </span>
+    </a>
+  );
   return (
     <article className="flex h-full flex-col overflow-hidden rounded-3xl border border-line bg-white shadow-soft">
       {video.embed ? (
-        <iframe
-          src={video.embed}
-          title={video.title}
-          className="aspect-video w-full bg-navy"
-          allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowFullScreen
-          loading="lazy"
-          referrerPolicy="strict-origin-when-cross-origin"
-        />
+        <AutoplayEmbed embed={video.embed} title={video.title} className="relative aspect-video w-full overflow-hidden bg-navy">
+          {cover}
+        </AutoplayEmbed>
       ) : (
-        <a
-          href={video.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="bg-hero-vivid grid aspect-video w-full place-items-center text-white"
-          aria-label={`Watch ${video.title} (opens in a new tab)`}
-        >
-          <span className="grid size-16 place-items-center rounded-full bg-white/25 ring-1 ring-white/50">
-            <Play aria-hidden className="size-7 translate-x-0.5 fill-white" />
-          </span>
-        </a>
+        cover
       )}
       <div className="flex flex-1 flex-col p-5">
         <h3 className="text-lg leading-snug font-bold">{video.title}</h3>

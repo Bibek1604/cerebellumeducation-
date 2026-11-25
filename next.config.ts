@@ -43,8 +43,8 @@ const nextConfig: NextConfig = {
         source: "/((?!_next/|api/|admin|media/|opengraph-image|.*[.]).*)",
         headers: [{ key: "Cache-Control", value: "public, max-age=0, s-maxage=0, must-revalidate" }],
       },
-      // Bundled pictures and videos: browsers keep them for a week.
-      { source: "/:dir(images|videos|logos)/:path*", headers: [{ key: "Cache-Control", value: "public, max-age=604800" }] },
+      // Bundled pictures and videos: browsers keep them for a week. "+" so that the /videos page itself is not included.
+      { source: "/:dir(images|videos|logos)/:path+", headers: [{ key: "Cache-Control", value: "public, max-age=604800" }] },
     ];
   },
   turbopack: {

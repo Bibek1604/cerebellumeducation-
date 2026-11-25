@@ -16,7 +16,7 @@ export const reelsSpec: FieldSpec[] = [
     itemLabel: "reel",
     titleKey: "title",
     max: 24,
-    help: "Short videos posted on Facebook, TikTok, Instagram or YouTube Shorts. Paste the link to the reel; visitors open it on that platform. The platform icon is picked automatically from the link.",
+    help: "Short videos posted on Facebook, TikTok, Instagram or YouTube Shorts. TikTok and YouTube reels play by themselves (without sound) when visitors scroll to them; use the full link, e.g. https://www.tiktok.com/@name/video/123…, not a short vm.tiktok.com link. Instagram and Facebook reels open on that platform.",
     fields: [
       { type: "text", key: "title", label: "Reel title", maxLength: 100, placeholder: "A day in the life of an MBBS student in Georgia" },
       { type: "text", key: "url", label: "Link to the reel (https://…)", format: "https", maxLength: 500, placeholder: "https://www.tiktok.com/@cerebellum/video/…" },
@@ -34,7 +34,7 @@ export const videosSpec: FieldSpec[] = [
     itemLabel: "video",
     titleKey: "title",
     max: 30,
-    help: "Paste a normal YouTube, Vimeo or Facebook video link. YouTube and Vimeo play right on the website; other links open in a new tab.",
+    help: "Paste a normal YouTube, Vimeo, Facebook or TikTok video link. They play by themselves on the website, without sound, when visitors scroll to them; other links open in a new tab.",
     fields: [
       { type: "text", key: "title", label: "Video title", maxLength: 120 },
       { type: "text", key: "url", label: "Video link (https://…)", format: "https", maxLength: 500, placeholder: "https://www.youtube.com/watch?v=…" },
