@@ -21,7 +21,7 @@ import {
 import { contentTag } from "@/cms/content";
 import { sanitizeFor } from "@/cms/sanitize";
 import { getEntry } from "@/cms/schema";
-import { deleteContent, findAdmin, insertAdmin, listAdmins, readContent, removeAdmin, updateAdmin, writeContent } from "@/cms/store";
+import { findAdmin, insertAdmin, listAdmins, readContent, removeAdmin, updateAdmin, writeContent } from "@/cms/store";
 import type { ContentKey } from "@/cms/types";
 import { audit, logger } from "@/lib/logger";
 
@@ -144,21 +144,6 @@ export async function saveContentAction(key: string, json: string): Promise<Save
   } catch (err) {
     log.error("Save failed", { by: admin.email, key: k, err });
     return { ok: false, error: `Your changes were not saved. ${STORAGE_ERROR}` };
-  }
-}
-
-export async function resetContentAction(key: string): Promise<SaveResult> {
-  const admin = await requireAdmin();
-  const k = assertKey(key);
-  if (!k) return { ok: false, error: "This content type doesn't exist. Please reload the page." };
-  try {
-    await deleteContent(k);
-    publish(k);
-    audit.info("Content restored to original", { by: admin.email, key: k });
-    return { ok: true, content: getEntry(k)!.defaults(), updatedAt: "" };
-  } catch (err) {
-    log.error("Restore failed", { by: admin.email, key: k, err });
-    return { ok: false, error: `The original content was not restored. ${STORAGE_ERROR}` };
   }
 }
 

@@ -19,7 +19,7 @@ export default function EditPage({ params }: PageProps<"/admin/pages/[slug]">) {
 }
 
 async function Editor({ params }: { params: PageProps<"/admin/pages/[slug]">["params"] }) {
-  const admin = await requireAdmin();
+  await requireAdmin();
   const { slug } = await params;
   const entry = getEntry(`page:${slug}`);
   if (!entry || entry.type !== "page") notFound();
@@ -27,7 +27,7 @@ async function Editor({ params }: { params: PageProps<"/admin/pages/[slug]">["pa
   const stored = await readContent(entry.key).catch(() => null);
   const initial = stored ? sanitizePage(entry as PageEntry, stored.data) : entry.defaults();
   return (
-    <AdminShell admin={admin} active={entry.key}>
+    <AdminShell active={entry.key}>
       <PageEditor contentKey={entry.key} initial={initial} options={await runtimeOptions()} />
     </AdminShell>
   );

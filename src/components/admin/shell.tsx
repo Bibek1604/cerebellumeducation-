@@ -1,15 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ExternalLink, FileText, LogOut, Settings2 } from "lucide-react";
+import { FileText, LogOut, Settings2 } from "lucide-react";
 import { logoutAction } from "@/app/admin/actions";
-import type { CurrentAdmin } from "@/cms/auth";
 import { pages, settings } from "@/cms/schema";
-import { usingDatabase } from "@/cms/store";
 
 export const slugOf = (key: string) => key.split(":")[1]!;
 
 /** Admin Panel frame: sidebar navigation + content area. */
-export function AdminShell({ admin, active, children }: { admin: CurrentAdmin; active: string; children: React.ReactNode }) {
+export function AdminShell({ active, children }: { active: string; children: React.ReactNode }) {
   const item = (href: string, label: string, isActive: boolean) => (
     <li key={href}>
       <Link
@@ -53,18 +51,10 @@ export function AdminShell({ admin, active, children }: { admin: CurrentAdmin; a
           </div>
           <ul className="space-y-0.5 border-t border-line pt-4">
             {item("/admin/users", "Admin users", active === "users")}
-            <li>
-              <Link href="/" target="_blank" className="flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-semibold text-navy hover:bg-primary-light">
-                View website <ExternalLink className="size-3.5" />
-              </Link>
-            </li>
           </ul>
         </nav>
         <div className="hidden border-t border-line p-4 lg:block">
-          <p className="truncate text-sm font-semibold text-navy">{admin.name}</p>
-          <p className="truncate text-xs text-ink-soft">{admin.email}</p>
-          <p className="mt-2 text-[0.7rem] text-ink-soft">Storage: {usingDatabase ? "PostgreSQL" : "local files (.data)"}</p>
-          <form action={logoutAction} className="mt-3">
+          <form action={logoutAction}>
             <button className="inline-flex items-center gap-1.5 rounded-full border border-line px-3 py-1.5 text-sm font-semibold text-navy hover:bg-muted">
               <LogOut className="size-4" /> Log out
             </button>

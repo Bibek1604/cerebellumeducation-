@@ -21,7 +21,7 @@ async function Users() {
   const fmt = (iso: string | null) => (iso ? new Date(iso).toLocaleString("en-GB", { dateStyle: "medium", timeStyle: "short" }) : "Never");
 
   return (
-    <AdminShell admin={me} active="users">
+    <AdminShell active="users">
       <h1 className="text-2xl font-bold sm:text-3xl">Admin users</h1>
       <p className="mt-1 text-ink">People who can sign in and edit the website.</p>
 

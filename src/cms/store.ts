@@ -1,6 +1,6 @@
 import "server-only";
 import { randomBytes } from "node:crypto";
-import { mkdir, readFile, rename, rm, writeFile } from "node:fs/promises";
+import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
 import path from "node:path";
 import type { Pool as PgPool } from "pg";
 import { logger } from "@/lib/logger";
@@ -121,14 +121,6 @@ export async function writeContent(key: string, data: unknown, updatedBy: string
   }
   const record: StoredContent = { data, updatedAt: new Date().toISOString(), updatedBy };
   await writeAtomic(contentFile(key), JSON.stringify(record, null, 2));
-}
-
-export async function deleteContent(key: string) {
-  if (usingDatabase) {
-    await (await db()).query("DELETE FROM cms_content WHERE key = $1", [key]);
-    return;
-  }
-  await rm(contentFile(key), { force: true });
 }
 
 /* ─────────────────────────────── Media ─────────────────────────────── */

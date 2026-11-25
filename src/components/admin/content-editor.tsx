@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState, useTransition } from "react";
-import { ArrowDown, ArrowUp, Check, ChevronDown, ExternalLink, LoaderCircle, Plus, RotateCcw, Save, Trash2, Undo2 } from "lucide-react";
-import { resetContentAction, saveContentAction } from "@/app/admin/actions";
+import { ArrowDown, ArrowUp, Check, ChevronDown, ExternalLink, LoaderCircle, Plus, Save, Trash2, Undo2 } from "lucide-react";
+import { saveContentAction } from "@/app/admin/actions";
 import { addableSpecs, getEntry, newSectionData, specFor, type PageEntry, type SettingsEntry } from "@/cms/schema";
 import type { PageContent, Section, SettingsContent } from "@/cms/types";
 import { cn } from "@/lib/utils";
@@ -47,10 +47,6 @@ function useSaver<T>(key: string, initial: T) {
       setValue(JSON.parse(saved));
       setStatus({ kind: "idle" });
     },
-    reset: () => {
-      if (!window.confirm("Restore the original website content for this item? Your saved changes here will be replaced.")) return;
-      start(async () => apply(await resetContentAction(key)));
-    },
   };
 }
 
@@ -69,9 +65,6 @@ function Toolbar({ title, viewHref, s }: { title: string; viewHref?: string; s: 
             View page <ExternalLink className="size-4" />
           </Link>
         )}
-        <button type="button" onClick={s.reset} disabled={s.pending} className="inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-sm font-semibold text-ink-soft hover:bg-muted disabled:opacity-50">
-          <RotateCcw className="size-4" /> Restore original
-        </button>
         <button type="button" onClick={s.discard} disabled={!s.dirty || s.pending} className="inline-flex items-center gap-1.5 rounded-full border border-line px-3.5 py-2 text-sm font-semibold text-navy hover:bg-muted disabled:opacity-40">
           <Undo2 className="size-4" /> Discard
         </button>

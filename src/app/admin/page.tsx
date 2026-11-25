@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { Suspense } from "react";
-import { ArrowRight, Database, FileText, HardDrive, Settings2 } from "lucide-react";
+import { ArrowRight, FileText, Settings2 } from "lucide-react";
 import { AdminShell, slugOf } from "@/components/admin/shell";
 import { requireAdmin } from "@/cms/auth";
 import { pages, settings } from "@/cms/schema";
-import { readContent, usingDatabase } from "@/cms/store";
+import { readContent } from "@/cms/store";
 
 export const metadata = { title: "Dashboard" };
 
@@ -19,14 +19,14 @@ export default function AdminDashboardPage() {
 async function lastSaved(key: string) {
   try {
     const r = await readContent(key);
-    return r ? `Edited ${new Date(r.updatedAt).toLocaleString("en-GB", { dateStyle: "medium", timeStyle: "short" })}${r.updatedBy ? ` by ${r.updatedBy}` : ""}` : "Original content";
+    return r ? `Edited ${new Date(r.updatedAt).toLocaleString("en-GB", { dateStyle: "medium", timeStyle: "short" })}` : "Not edited yet";
   } catch {
     return "Status unavailable";
   }
 }
 
 async function Dashboard() {
-  const admin = await requireAdmin();
+  await requireAdmin();
   const [pageStatus, settingStatus] = await Promise.all([Promise.all(pages.map((p) => lastSaved(p.key))), Promise.all(settings.map((s) => lastSaved(s.key)))]);
 
   const card = (href: string, title: string, desc: string, status: string) => (
@@ -43,23 +43,9 @@ async function Dashboard() {
   );
 
   return (
-    <AdminShell admin={admin} active="dashboard">
-      <h1 className="text-2xl font-bold sm:text-3xl">Welcome, {admin.name.split(" ")[0]}</h1>
+    <AdminShell active="dashboard">
+      <h1 className="text-2xl font-bold sm:text-3xl">Dashboard</h1>
       <p className="mt-1 text-ink">Edit page content, show or hide sections, and manage shared details used across the website.</p>
-
-      <div className={`mt-5 flex items-start gap-3 rounded-2xl p-4 text-sm ${usingDatabase ? "bg-primary-light text-navy" : "bg-gold-light text-navy"}`}>
-        {usingDatabase ? <Database className="mt-0.5 size-5 shrink-0 text-primary" /> : <HardDrive className="mt-0.5 size-5 shrink-0 text-gold-dark" />}
-        <p>
-          {usingDatabase ? (
-            <>Content is saved in your <strong>PostgreSQL</strong> database.</>
-          ) : (
-            <>
-              Content is saved in <strong>local files</strong> on this server (<code>.data</code> folder). Add <code>DATABASE_URL</code> to switch to
-              PostgreSQL.
-            </>
-          )}
-        </p>
-      </div>
 
       <h2 className="mt-8 flex items-center gap-2 text-lg font-bold">
         <FileText className="size-5 text-primary" /> Pages
