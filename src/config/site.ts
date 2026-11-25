@@ -54,12 +54,17 @@ export const siteConfig = {
     phone: "+977 974-2823747" as string | null,
     // Dial format for tel: links
     phoneHref: "+9779742823747" as string | null,
-    // TODO(owner): WhatsApp number, international format without + or spaces, e.g. "9779800000000"
-    whatsapp: null as string | null,
+    // International format without + or spaces
+    whatsapp: "9779742823747" as string | null,
     // TODO(owner): public enquiry email
     email: null as string | null,
-    // TODO(owner): office address
-    address: null as Address | null,
+    address: {
+      line1: "Ramshah Path",
+      city: "Kathmandu",
+      region: "Bagmati Province",
+      postalCode: "44600",
+      country: "Nepal",
+    } as Address | null,
     officeHours: ["Sunday – Friday: 9:00 AM – 6:00 PM"] as string[] | null,
     // TODO(owner): Google Maps "Embed a map" iframe src URL
     mapEmbedUrl: null as string | null,

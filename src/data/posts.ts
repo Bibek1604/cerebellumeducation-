@@ -65,4 +65,55 @@ export const seedPosts: SeedPost[] = [
       },
     ],
   },
+  // cee-entrance-guide-nepal: MEC FAQ (mec.gov.np/frontfaq), read on 2026-11-25.
+  // Class dates, times and fees are left out on purpose until the owner supplies them.
+  {
+    slug: "cee-entrance-guide-nepal",
+    title: "CEE Entrance Exam Nepal: Complete Guide",
+    date: "2026-11-25",
+    excerpt: "CEE (MECEE-BL) explained for +2 science students: who can apply, documents, exam-day rules, the 50th percentile, and our CEE classes.",
+    cover: { src: "/images/about-student.jpg", alt: "Student reading a book between library shelves" },
+    blocks: [
+      {
+        heading: "",
+        text: "CEE is the common name for MECEE-BL, the bachelor-level entrance exam of Nepal's Medical Education Commission (MEC). It decides who can study medical and health programmes such as MBBS, BDS and nursing in Nepal. It also matters if you plan to study abroad, because the MEC Eligibility Letter is generally linked to passing it.\n\nThis guide is based on MEC's own frequently asked questions. Rules can change, so always check the latest notice on [mec.gov.np](https://www.mec.gov.np).",
+      },
+      {
+        heading: "Who can sit the CEE?",
+        text: "MEC states that you need:\n\n- Class 12 or equivalent with Physics, Chemistry and Biology\n- An average of at least 50 percent marks or a 2.4 GPA\n- For BNS: at least 50 percent in PCL or Diploma in Nursing, and registration with Nepal Nursing Council\n\nEach programme's syllabus can add further conditions, so read the [official syllabus page](https://www.mec.gov.np/category/syllabus) for the programme you want.",
+      },
+      {
+        heading: "How to apply",
+        text: "The whole process is online, so you do not need to visit MEC. Applications are made on [entrance.mec.gov.np](https://entrance.mec.gov.np/). Opening dates follow MEC's yearly academic calendar and are announced by notice.\n\nPay at the bank at least two days before the last application date. You need one voucher for each programme you apply for.",
+      },
+      {
+        heading: "Documents to keep ready",
+        text: "- Citizenship certificate or national ID (passport for foreign candidates)\n- Certificate and transcript of your qualification\n- Equivalence certificate, if you studied under a foreign board\n- Percentage or grade certificate, if your transcript does not show it\n- Reservation documents, if you apply under a reserved category\n- Professional council registration or experience certificate, if your programme requires it\n- Bank voucher for the exam fee\n- Recent passport-size digital photo and a scan of your signature",
+      },
+      {
+        heading: "Exam-day rules",
+        text: "- Your admit card appears in your online profile five days before the exam. Print it in colour\n- Arrive two hours early. Entry starts 30 minutes before the exam\n- You cannot enter if you are more than 15 minutes late, and you cannot leave until the time ends\n- Bring your admit card and your original citizenship certificate or national ID\n- Phones, watches and jewellery are not allowed\n- Fill the roll number and question-set bubbles carefully. MEC says mistakes there can cancel your answer sheet or stop your result from being published",
+      },
+      {
+        heading: "What score do you need?",
+        text: "MEC publishes a ranking. To be eligible for admission you need at least the 50th percentile. That makes you eligible, but it does not promise a seat: seats are filled by merit rank and the programme priorities you set online. The rank list is valid for one academic session.\n\nMEC's FAQ says that if you are not satisfied with your result, you can apply for retotaling within three days of publication. The notice for each exam gives the exact time.",
+      },
+      {
+        heading: "How to prepare",
+        text: "- Start from the official syllabus of your programme, not from a summary\n- Make a weekly plan that covers Physics, Chemistry and Biology\n- Practise with a timer and review every mistake\n- Practise filling an answer sheet, so that bubbles do not cost you your result\n- Set your documents aside early, so that application week stays calm",
+      },
+      {
+        heading: "CEE classes and counselling at Cerebellum",
+        text: "Cerebellum Education Network runs CEE preparation classes and also counsels students and parents on what comes after the exam. Our office is at Ramshah Path, Kathmandu. For current class information, [contact us](/contact) or [book a free counselling session](/book-counselling).\n\nNo class can guarantee a rank or a seat. Be careful with anyone who promises one.",
+      },
+      {
+        heading: "After the exam",
+        text: "Read [After CEE Result 2083: All Your Options](/blog/after-cee-result-options) for retotaling, matching and the Eligibility Letter, or see our guides to [MBBS](/programs/mbbs) and [nursing](/programs/nursing).",
+      },
+      {
+        heading: "Official sources",
+        text: "- [MEC frequently asked questions](https://mec.gov.np/frontfaq)\n- [MEC syllabus page](https://www.mec.gov.np/category/syllabus)\n- [MEC online application](https://entrance.mec.gov.np/)",
+      },
+    ],
+  },
 ];

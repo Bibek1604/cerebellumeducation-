@@ -5,7 +5,6 @@
 import { branding } from "@/config/branding";
 import { homeFaqs } from "@/data/faqs";
 import { services } from "@/data/process";
-import { globalSources } from "@/data/sources";
 import { homeMediaDefaults, homeMediaSpecs } from "./schema-media";
 import type { FieldSpec, PageContent, Section, SectionSpec } from "./types";
 
@@ -184,10 +183,11 @@ export const homeSpecs: SectionSpec[] = [
   {
     kind: "homeOnline",
     label: "Online counselling band",
-    description: "Blue band with three steps, two buttons and the video-call card.",
+    description: "Blue band with the video-call picture and three steps. Phone, WhatsApp and hours come from Contact details & company.",
     fields: [
       { type: "text", key: "heading", label: "Heading", maxLength: 120 },
       { type: "textarea", key: "description", label: "Text", hideable: true, maxLength: 400 },
+      { type: "list", key: "points", label: "Ticked points", itemLabel: "point", titleKey: "text", hideable: true, max: 4, fields: [{ type: "text", key: "text", label: "Point", maxLength: 40 }] },
       {
         type: "list",
         key: "steps",
@@ -200,18 +200,20 @@ export const homeSpecs: SectionSpec[] = [
           { type: "icon", key: "icon", label: "Icon" },
           { type: "text", key: "label", label: "Small label", maxLength: 20 },
           { type: "text", key: "title", label: "Title", maxLength: 50 },
+          { type: "text", key: "text", label: "Short text", maxLength: 120 },
         ],
       },
       linkField("primaryButton", "Orange button"),
-      linkField("secondaryButton", "Outline button"),
+      linkField("secondaryButton", "Text link"),
       {
         type: "object",
         key: "card",
-        label: "Video-call card",
+        label: "Video-call picture",
         hideable: true,
         fields: [
           { type: "text", key: "title", label: "Card title", maxLength: 40 },
           { type: "text", key: "liveLabel", label: "Badge text", maxLength: 12 },
+          { type: "image", key: "image", label: "Main photo" },
         ],
       },
     ],
@@ -296,16 +298,6 @@ export const homeSpecs: SectionSpec[] = [
       linkField("seeAll", "Link below the questions"),
     ],
   },
-  {
-    kind: "homeVerify",
-    label: "'Verify the university' notice",
-    description: "Orange-edged safety notice with an outside link.",
-    fields: [
-      { type: "text", key: "heading", label: "Heading", maxLength: 120 },
-      { type: "textarea", key: "text", label: "Text", maxLength: 400 },
-      linkField("button", "Button"),
-    ],
-  },
 ];
 
 export const homeDefaults = (): PageContent => ({
@@ -383,17 +375,18 @@ export const homeDefaults = (): PageContent => ({
       description: "Answer two quick questions and get a starting shortlist of destinations to discuss with a counsellor.",
     }),
     section("homeOnline", {
-      heading: "Can't visit our office? Talk to us online.",
+      heading: "Can't visit our office? *Talk to us online.*",
       description:
-        "The same personalised guidance by video or phone, ideal for students outside the city and for parents who want to join from work.",
+        "Get the same one-to-one guidance by video or phone, wherever you are in Nepal. Parents can join from home or work.",
+      points: texts("op", ["Free first session", "Video or phone", "Parents welcome"]),
       steps: items("os", [
-        { icon: "calendar", label: "Step 1", title: "Request a session" },
-        { icon: "messages", label: "Step 2", title: "Confirm a time" },
-        { icon: "video", label: "Step 3", title: "Talk to a counsellor" },
+        { icon: "calendar", label: "Step 1", title: "Request a session", text: "Fill in a short form. No documents needed at this stage." },
+        { icon: "messages", label: "Step 2", title: "Confirm a time", text: "We agree a day and time that suits you and your parents." },
+        { icon: "video", label: "Step 3", title: "Talk to a counsellor", text: "Ask about CEE, MBBS, BDS or nursing and plan your next step." },
       ]),
       primaryButton: { label: "Book online counselling", href: "/book-counselling?mode=online" },
       secondaryButton: { label: "How it works", href: "/admission-process" },
-      card: { title: "Online counselling", liveLabel: "Live" },
+      card: { title: "Online counselling", liveLabel: "Video call", image: img("", "") },
     }),
     section("homeWhy", {
       heading: "More Than Admissions. *Guidance for Your Future.*",
@@ -483,11 +476,6 @@ export const homeDefaults = (): PageContent => ({
       },
       faqs: items("faq", homeFaqs.map((f) => ({ question: f.question, answer: f.answer }))),
       seeAll: { label: "See all FAQs", href: "/faqs" },
-    }),
-    section("homeVerify", {
-      heading: "Before you pay any fees, verify the university.",
-      text: "Check its listing in the World Directory of Medical Schools and your home regulator's rules. Be wary of anyone who guarantees admission, a visa or a licence.",
-      button: { label: "Search WDOMS", href: globalSources.wdoms.href },
     }),
   ],
 });

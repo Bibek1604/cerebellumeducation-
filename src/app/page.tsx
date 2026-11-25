@@ -9,7 +9,6 @@ import { TrustSection } from "@/components/sections/home/trust-section";
 import { ProcessSection } from "@/components/sections/home/process-section";
 import { TeamSection, teamWillRender } from "@/components/sections/home/team-section";
 import { FaqPreview } from "@/components/sections/home/faq-preview";
-import { VerifyStrip } from "@/components/sections/home/verify-strip";
 import { BlogSection, mediaWillRender, ReelsSection, VideosSection } from "@/components/sections/home/media-sections";
 import { GenericSection } from "@/components/cms/sections";
 import { getPage, getSteps, sectionsOf } from "@/cms/content";
@@ -19,7 +18,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata = pageMetadata({
   title: "MBBS Abroad & Medical Counselling in Nepal | Cerebellum",
   description:
-    "CEE classes and medical counselling in Kathmandu for Nepali students: MBBS, BDS and nursing options, MEC eligibility and admission help.",
+    "Kathmandu consultancy for CEE classes and medical counselling: MBBS, BDS and nursing options, MEC eligibility and admission help.",
   path: "/",
   absoluteTitle: true,
 });
@@ -31,7 +30,6 @@ const FIXED_BG: Record<string, Tone | "blue"> = {
   homeHero: "white",
   homeAbout: "muted",
   homeOnline: "blue",
-  homeVerify: "white",
   cards: "muted",
   textBlock: "white",
   checklist: "white",
@@ -106,8 +104,6 @@ function HomeSection({ section, tone, prevWhite }: { section: Section; tone: Ton
       return <BlogSection section={section} tone={tone} />;
     case "homeFaq":
       return <FaqPreview section={section} tone={tone} />;
-    case "homeVerify":
-      return <VerifyStrip section={section} />;
     default:
       return <GenericSection section={section} prevWhite={prevWhite} />;
   }
