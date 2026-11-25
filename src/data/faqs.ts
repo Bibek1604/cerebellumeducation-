@@ -34,10 +34,10 @@ const draftCategories: DraftCategory[] = [
   },
   {
     id: "nepal",
-    title: "Nepali students: MECEE & Eligibility Certificate",
+    title: "Nepali students: CEE (MECEE-BL) & Eligibility Certificate",
     items: [
       {
-        question: "Do I need MECEE-BL and an Eligibility Certificate to study MBBS abroad?",
+        question: "Do I need CEE (MECEE-BL) and an Eligibility Certificate to study MBBS abroad?",
         answer:
           "If you are a Nepali citizen, yes in most cases. Nepal's Medical Education Commission (MEC) states that an Eligibility Letter (Eligibility Certificate) must be obtained before going abroad for medical study, and eligibility is generally linked to passing its bachelor-level entrance exam, MECEE-BL. MEC's FAQ describes limited exceptions and states that registration with the professional council follows only after applying with the letter. Check the current rules on mec.gov.np before you apply.",
       },
@@ -135,7 +135,7 @@ const byQuestion = (q: string) => faqCategories.flatMap((c) => c.items).find((i)
 /** Questions surfaced on the homepage preview (skips any that are unpublished). */
 export const homeFaqs: FaqItem[] = [
   "What qualifications are required for MBBS abroad?",
-  "Do I need MECEE-BL and an Eligibility Certificate to study MBBS abroad?",
+  "Do I need CEE (MECEE-BL) and an Eligibility Certificate to study MBBS abroad?",
   "Which countries offer medical education opportunities?",
   "What are the expected tuition and living costs?",
   "What should I know about medical licensing after graduation?",

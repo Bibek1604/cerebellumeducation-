@@ -1,4 +1,5 @@
 import "server-only";
+import { getProgramme } from "@/data/programmes";
 import type { Programme } from "@/types/content";
 import { getSettings, hasImage, on, textsOf, visible } from "./content";
 import type { ImageValue } from "./types";
@@ -21,6 +22,7 @@ type Row = {
   academic: unknown;
   showNepalRules: string;
   faqs: unknown;
+  seoTitle?: string;
   seoDescription: string;
 };
 
@@ -38,6 +40,8 @@ export async function getProgrammes(): Promise<Programme[]> {
       shortName: r.shortName || r.name,
       category: r.category,
       icon: r.icon,
+      // Content saved before this field existed falls back to the built-in title.
+      seoTitle: r.seoTitle || getProgramme(r.slug)?.seoTitle || `${r.name} for Nepali Students`,
       seoDescription: r.seoDescription || r.summary,
       summary: r.summary,
       intro: r.intro,

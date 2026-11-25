@@ -2,10 +2,19 @@ import type { MetadataRoute } from "next";
 import { absoluteUrl, siteConfig } from "@/config/site";
 import { getDestinations } from "@/cms/destinations";
 import { getProgrammes } from "@/cms/programmes";
-import { getPosts } from "@/cms/media";
+import { getPage } from "@/cms/content";
+import { getPosts, getReels, getVideos } from "@/cms/media";
+import { storiesOf } from "@/cms/stories";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [destinations, programmes, posts] = await Promise.all([getDestinations(), getProgrammes(), getPosts()]);
+  const [destinations, programmes, posts, videos, reels, storiesPage] = await Promise.all([
+    getDestinations(),
+    getProgrammes(),
+    getPosts(),
+    getVideos(),
+    getReels(),
+    getPage("page:success-stories"),
+  ]);
   const lastModified = siteConfig.lastUpdated;
   const staticRoutes: [string, number][] = [
     ["/", 1],
@@ -17,9 +26,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ["/scholarships", 0.7],
     ["/faqs", 0.7],
     ["/contact", 0.7],
-    ["/success-stories", 0.5],
-    ["/blog", 0.6],
-    ["/videos", 0.5],
+    // Empty pages are hidden from search engines (see their generateMetadata), so they are not listed either.
+    ...(storiesOf(storiesPage).length ? ([["/success-stories", 0.5]] as [string, number][]) : []),
+    ...(posts.length ? ([["/blog", 0.6]] as [string, number][]) : []),
+    ...(videos.length + reels.length ? ([["/videos", 0.5]] as [string, number][]) : []),
     ["/privacy-policy", 0.2],
     ["/terms-and-conditions", 0.2],
   ];

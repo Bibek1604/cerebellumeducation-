@@ -73,7 +73,7 @@ export function DestinationsTabs({
               <span>
                 <span className="block text-base font-extrabold text-navy sm:text-lg">{askCard.title}</span>
                 <span className="mt-1 hidden text-sm text-ink sm:block">{askCard.text}</span>
-                <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-bold text-primary">
+                <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-bold text-primary-dark">
                   {askCard.label} <ArrowRight aria-hidden className="size-4" />
                 </span>
               </span>

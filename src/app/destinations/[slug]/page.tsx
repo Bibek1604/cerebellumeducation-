@@ -47,13 +47,10 @@ export async function generateMetadata({
   params,
 }: PageProps<"/destinations/[slug]">) {
   const { slug } = await params;
-  const [d, programmes] = await Promise.all([getDestinationBySlug(slug), getProgrammes()]);
+  const d = await getDestinationBySlug(slug);
   if (!d) return {};
   return pageMetadata({
-    title: `Study Medicine in ${d.name}: ${d.programmes
-      .map((p) => programmes.find((x) => x.slug === p)?.shortName)
-      .filter(Boolean)
-      .join(", ")}`,
+    title: d.seoTitle,
     description: d.seoDescription,
     path: `/destinations/${d.slug}`,
   });

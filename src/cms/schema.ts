@@ -244,7 +244,7 @@ const aboutDefaults = (): PageContent => ({
     section("hero", {
       crumbLabel: "About Us",
       title: "Guiding future doctors *with clarity and care*",
-      description: `${siteConfig.name} is an international medical education consultancy. We help students and parents understand their options, choose with confidence and navigate admission to medical programmes abroad.`,
+      description: `${siteConfig.name} is a medical education consultancy in Kathmandu. We help Nepali students and parents understand their options, choose with confidence and navigate admission to medical programmes abroad.`,
       image: { src: "/images/about-student.jpg", alt: "Smiling student reading a book between library shelves", position: "70% 50%" },
       badge: { title: "Parents always welcome", text: "In every conversation" },
     }),

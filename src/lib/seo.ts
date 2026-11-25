@@ -2,6 +2,7 @@ import type { SiteSettings } from "@/cms/content";
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/config/site";
 import type { FaqItem } from "@/types/content";
+import { mapCoordinates, openingHoursSpec } from "@/lib/local-business";
 
 type PageMetaInput = {
   title: string;
@@ -16,7 +17,7 @@ type PageMetaInput = {
 const ogImage = { url: "/opengraph-image", width: 1200, height: 630, alt: `${siteConfig.name} | International Medical Education Consultancy` };
 
 export function pageMetadata({ title, description, path, absoluteTitle, noIndex }: PageMetaInput): Metadata {
-  const fullTitle = absoluteTitle ? title : `${title} | ${siteConfig.name}`;
+  const fullTitle = absoluteTitle ? title : `${title} | ${siteConfig.shortName}`;
   return {
     title: absoluteTitle ? { absolute: title } : title,
     description,
@@ -44,12 +45,15 @@ export function organizationJsonLd(settings: SiteSettings) {
   const { contact, social, company } = settings;
   const data: Record<string, unknown> = {
     "@context": "https://schema.org",
-    "@type": ["Organization", "EducationalOrganization"],
+    // LocalBusiness needs a real address, so it is only claimed once one is set in the Admin Panel.
+    "@type": contact.address ? ["EducationalOrganization", "LocalBusiness"] : ["Organization", "EducationalOrganization"],
     "@id": `${siteConfig.url}/#organization`,
     name: siteConfig.name,
     url: siteConfig.url,
     description: siteConfig.description,
-    knowsAbout: ["Medical education abroad", "MBBS admissions", "International university admissions counselling"],
+    alternateName: siteConfig.shortName,
+    areaServed: { "@type": "Country", name: "Nepal" },
+    knowsAbout: ["Medical education abroad", "MBBS admissions", "Medical career counselling in Nepal", "MECEE-BL (CEE)", "MEC Eligibility Letter"],
   };
   if (contact.email) data.email = contact.email;
   if (contact.phone) data.telephone = contact.phone;
@@ -67,7 +71,15 @@ export function organizationJsonLd(settings: SiteSettings) {
   if (company.legalName) data.legalName = company.legalName;
   if (company.registrationNo) data.identifier = company.registrationNo;
   if (company.establishedYear) data.foundingDate = company.establishedYear;
-  if (contact.officeHours) data.openingHours = contact.officeHours;
+  // openingHoursSpecification, hasMap and geo belong to places, so they need the address as well.
+  if (contact.address) {
+    const hours = openingHoursSpec(contact.officeHours ?? []);
+    if (hours.length) data.openingHoursSpecification = hours;
+    if (contact.mapLink) data.hasMap = contact.mapLink;
+    const geo = mapCoordinates(contact.mapEmbedUrl);
+    if (geo) data.geo = { "@type": "GeoCoordinates", ...geo };
+    data.image = `${siteConfig.url}/opengraph-image`;
+  }
   data.logo = `${siteConfig.url}/logos/cerebellum-logo-full.png`;
   return data;
 }

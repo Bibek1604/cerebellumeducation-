@@ -15,12 +15,11 @@ import { GenericSection } from "@/components/cms/sections";
 import { getPage, getSteps, sectionsOf } from "@/cms/content";
 import type { Section } from "@/cms/types";
 import { pageMetadata } from "@/lib/seo";
-import { siteConfig } from "@/config/site";
 
 export const metadata = pageMetadata({
-  title: `Study Medicine Abroad: MBBS Admission Counselling | ${siteConfig.name}`,
+  title: "MBBS Abroad & Medical Counselling in Nepal | Cerebellum",
   description:
-    "Personalised guidance for studying MBBS and medicine abroad: compare destinations and universities, with step-by-step admission and visa support.",
+    "Kathmandu medical counsellors for Nepali students: MBBS, BDS and nursing options after CEE, MEC eligibility and admission help. First session free.",
   path: "/",
   absoluteTitle: true,
 });

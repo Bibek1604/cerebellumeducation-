@@ -23,6 +23,7 @@ export async function ProgrammesShowcase({ section, tone }: { section: CmsSectio
     return {
       slug: p.slug,
       name: p.name,
+      shortName: p.shortName,
       category: p.category,
       icon: p.icon,
       summary: p.summary,

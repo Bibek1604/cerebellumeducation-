@@ -5,11 +5,18 @@ import { ReelCard } from "@/components/media/reel-card";
 import { getReels, getVideos } from "@/cms/media";
 import { pageMetadata } from "@/lib/seo";
 
-export const metadata = pageMetadata({
-  title: "Videos & Reels",
-  description: "Videos and reels from Cerebellum Education Network: student life, university walkthroughs and answers to common questions about studying medicine abroad.",
-  path: "/videos",
-});
+/** Hidden from search engines while the page is still empty. */
+export async function generateMetadata() {
+  const [videos, reels] = await Promise.all([getVideos(), getReels()]);
+  const hasContent = videos.length + reels.length > 0;
+  return pageMetadata({
+    title: "Medical Study Videos & Reels",
+    description:
+      "Videos and reels from Cerebellum Education Network: student life, university walkthroughs and answers for Nepali medical students.",
+    path: "/videos",
+    noIndex: !hasContent,
+  });
+}
 
 /** Videos: Admin → Videos. Reels: Admin → Reels. */
 export default async function VideosPage() {

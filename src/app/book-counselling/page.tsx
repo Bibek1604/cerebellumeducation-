@@ -9,9 +9,9 @@ import { getProgrammes } from "@/cms/programmes";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "Book Free Medical Admission Counselling",
+  title: "Free Medical Counselling in Kathmandu",
   description:
-    "Book a free, no-obligation counselling session about studying MBBS abroad. Get advice on eligibility, destinations, universities and admissions.",
+    "Book a free session in person, online or by phone. Get advice on MBBS, BDS or nursing after your CEE result, with no obligation.",
   path: "/book-counselling",
 });
 

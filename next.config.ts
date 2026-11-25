@@ -20,6 +20,20 @@ const nextConfig: NextConfig = {
     minimumCacheTTL: 2678400,
     qualities: [75, 100],
   },
+  async redirects() {
+    return [
+      // One address for Google: www goes to the main domain.
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.cerebellumeducation.com" }],
+        destination: "https://cerebellumeducation.com/:path*",
+        permanent: true,
+      },
+      // British spelling, which visitors type and other sites may link to.
+      { source: "/programmes", destination: "/programs", permanent: true },
+      { source: "/programmes/:slug", destination: "/programs/:slug", permanent: true },
+    ];
+  },
   async headers() {
     return [
       { source: "/(.*)", headers: securityHeaders },

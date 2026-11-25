@@ -2,30 +2,23 @@ import { Container, Section as Band } from "@/components/ui/container";
 import { StoriesBrowser } from "@/components/testimonials/stories-browser";
 import { StoriesEmpty } from "@/components/testimonials/stories-empty";
 import { GenericSection, HeroSection } from "@/components/cms/sections";
-import { getPage, hasImage, on, sectionsOf } from "@/cms/content";
+import { getPage, hasImage, sectionsOf } from "@/cms/content";
+import { publishedStories, storiesOf } from "@/cms/stories";
 import { getDestinations } from "@/cms/destinations";
-import type { ImageValue } from "@/cms/types";
 import type { Testimonial } from "@/types/content";
 import { pageMetadata } from "@/lib/seo";
 
-export const metadata = pageMetadata({
-  title: "Student Success Stories",
-  description:
-    "Stories from students who studied medicine abroad with guidance from Cerebellum Education Network, shared in their own words with permission.",
-  path: "/success-stories",
-});
-
-type Row = {
-  consent: string;
-  studentName: string;
-  destination: string;
-  university: string;
-  programme: string;
-  admissionYear: string;
-  quote: string;
-  photo: ImageValue;
-  videoUrl: string;
-};
+/** Hidden from search engines while the page is still empty. */
+export async function generateMetadata() {
+  const hasContent = storiesOf(await getPage("page:success-stories")).length > 0;
+  return pageMetadata({
+    title: "Student Success Stories",
+    description:
+      "Stories from students who studied medicine abroad with guidance from Cerebellum Education Network, shared in their own words with permission.",
+    path: "/success-stories",
+    noIndex: !hasContent,
+  });
+}
 
 /** Content: Admin → Pages → Success Stories. Only stories marked "permission on file" are shown. */
 export default async function SuccessStoriesPage() {
@@ -36,9 +29,7 @@ export default async function SuccessStoriesPage() {
       {sections.map((s, i) => {
         if (s.kind === "hero") return <HeroSection key={s.id} section={s} href="/success-stories" />;
         if (s.kind !== "storyList") return <GenericSection key={s.id} section={s} prevWhite={i > 0} />;
-        const stories: Testimonial[] = on<Row>(s.data.stories)
-          .filter((r) => r.consent === "yes" && r.studentName && r.quote)
-          .map((r) => ({
+        const stories: Testimonial[] = publishedStories(s).map((r) => ({
             id: r._id,
             studentName: r.studentName,
             destination: r.destination,

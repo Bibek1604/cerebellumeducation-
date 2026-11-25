@@ -42,7 +42,7 @@ export const siteConfig = {
   shortName: "Cerebellum",
   tagline: "International Medical Education Consultancy",
   description:
-    "Cerebellum Education Network guides students and parents through studying medicine abroad, from counselling and university selection to applications, visas and pre-departure support.",
+    "Cerebellum Education Network is a Kathmandu consultancy that guides Nepali students and parents through studying medicine abroad, from counselling and university selection to applications, visas and pre-departure support.",
 
   /** Public URL, used for canonical links, sitemap and Open Graph. Set NEXT_PUBLIC_SITE_URL in production. */
   url: (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(/\/$/, ""),

@@ -37,7 +37,6 @@ export function Logo({ onDark, className, priority }: { onDark?: boolean; classN
             width={branding.logo.width}
             height={branding.logo.height}
             priority={priority}
-            quality={100}
             className={cn("w-auto", plate ? "h-14" : "h-14 sm:h-16 xl:h-14 2xl:h-16")}
           />
         </span>

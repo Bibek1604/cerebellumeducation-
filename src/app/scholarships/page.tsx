@@ -13,9 +13,9 @@ import type { Destination } from "@/types/content";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "Scholarships for Studying Medicine Abroad",
+  title: "Medical Scholarships for Nepali Students",
   description:
-    "Scholarship options for studying medicine abroad: government schemes, university merit awards, eligibility, application steps and financial planning.",
+    "Scholarships for Nepali students who want to study medicine abroad: government schemes, university awards, eligibility and how to apply.",
   path: "/scholarships",
 });
 

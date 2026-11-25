@@ -21,8 +21,8 @@ const lora = Lora({ variable: "--font-heading", subsets: ["latin"], display: "sw
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: `${siteConfig.name} | Study Medicine Abroad`,
-    template: `%s | ${siteConfig.name}`,
+    default: `Medical Counselling in Nepal | ${siteConfig.shortName}`,
+    template: `%s | ${siteConfig.shortName}`,
   },
   description: siteConfig.description,
   applicationName: siteConfig.name,

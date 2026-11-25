@@ -151,7 +151,7 @@ export const homeSpecs: SectionSpec[] = [
         ],
       },
       { type: "text", key: "bookLabel", label: "Card button text", maxLength: 30 },
-      { type: "text", key: "learnLabel", label: "Card link text", maxLength: 30 },
+      { type: "text", key: "learnLabel", label: "Card link text (write {programme} for the short name)", maxLength: 30 },
       linkField("button", "Button below"),
     ],
   },
@@ -312,10 +312,10 @@ export const homeDefaults = (): PageContent => ({
   version: 1,
   sections: [
     section("homeHero", {
-      titleLine1: "Your Medical Dreams.",
-      titleLine2: "A World of Opportunities.",
+      titleLine1: "Medical career counselling in Kathmandu",
+      titleLine2: "MBBS, BDS & nursing",
       description:
-        "Personalised counselling for MBBS and medical degrees abroad: choosing the right country and university, preparing your application and getting you to campus.",
+        "Your medical dreams, a world of opportunities. We help Nepali students plan what comes after CEE: choosing the right country and university for MBBS, BDS or nursing, the MEC eligibility letter, your application and getting you to campus.",
       chips: texts("chip", ["MBBS & medical degrees", "Admission & visa guidance", "Support until you reach campus"]),
       primaryButton: { label: "Book Free Counselling", href: "/book-counselling" },
       secondaryButton: { label: "Explore destinations", href: "/destinations" },
@@ -343,7 +343,7 @@ export const homeDefaults = (): PageContent => ({
       photo: img(branding.aboutImage.src, branding.aboutImage.alt, "70% 50%"),
       heading: "Your Trusted Partner in *Medical Education Abroad*",
       description:
-        "Choosing where to study medicine is one of the biggest decisions a family makes. We help you make it with clarity, explaining options honestly and guiding you through every step of admission.",
+        "Choosing where to study medicine is one of the biggest decisions a family makes. We help families in Nepal make it with clarity, explaining options honestly and guiding you through every step of admission.",
       points: items("pt", [
         { icon: "user-check", text: "Advice built around your grades, goals, budget and family" },
         { icon: "badge-check", text: "Requirements checked against official sources" },
@@ -365,7 +365,7 @@ export const homeDefaults = (): PageContent => ({
         "biomedical-sciences": img("/images/programme-microscope.jpg", "Students working at microscopes in a laboratory"),
       },
       bookLabel: "Book counselling",
-      learnLabel: "Learn more",
+      learnLabel: "About {programme}",
       button: { label: "View all programmes", href: "/programs" },
     }),
     section("homeDestinations", {

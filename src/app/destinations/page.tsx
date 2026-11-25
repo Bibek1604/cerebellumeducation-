@@ -13,9 +13,9 @@ import { getProgrammes } from "@/cms/programmes";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "Study Medicine Abroad: Destinations",
+  title: "MBBS Abroad for Nepali Students: Countries",
   description:
-    "Compare destinations for studying MBBS and medicine abroad, including China, Bangladesh, India, Russia, Georgia, Kazakhstan and the Philippines.",
+    "Compare MBBS in Bangladesh, India, China, Russia, Georgia, Kazakhstan and the Philippines for Nepali students: eligibility, duration and MEC rules.",
   path: "/destinations",
 });
 

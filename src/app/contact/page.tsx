@@ -10,9 +10,9 @@ import { pageMetadata } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 
 export const metadata = pageMetadata({
-  title: "Contact Us",
+  title: "Contact Our Kathmandu Office",
   description:
-    "Get in touch with Cerebellum Education Network about studying medicine abroad. Send us a message or reach our counselling team directly.",
+    "Contact Cerebellum Education Network in Kathmandu about MBBS, BDS or nursing. Send a message or book a free counselling session.",
   path: "/contact",
 });
 

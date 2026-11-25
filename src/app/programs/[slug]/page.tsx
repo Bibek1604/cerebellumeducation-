@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: PageProps<"/programs/[slug]">
   const p = await getProgrammeBySlug(slug);
   if (!p) return {};
   return pageMetadata({
-    title: `Study ${p.name} Abroad`,
+    title: p.seoTitle,
     description: p.seoDescription,
     path: `/programs/${p.slug}`,
   });
@@ -60,7 +60,11 @@ export default async function ProgrammePage({ params }: PageProps<"/programs/[sl
     <>
       {showFaqs && <JsonLd data={faqJsonLd(p.faqs)} />}
       <PageHero
-        title={<span className="text-brand-gradient">{p.name}</span>}
+        title={
+          <>
+            <span className="text-brand-gradient">{p.name}</span> for Nepali students
+          </>
+        }
         description={p.intro || undefined}
         crumbs={[{ label: "Programmes", href: "/programs" }, { label: p.shortName, href: `/programs/${p.slug}` }]}
         aside={

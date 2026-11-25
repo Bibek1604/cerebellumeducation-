@@ -12,8 +12,9 @@ const all: Programme[] = [
     shortName: "MBBS",
     category: "Medicine",
     icon: "stethoscope",
+    seoTitle: "MBBS for Nepali Students: Eligibility & CEE",
     seoDescription:
-      "Study MBBS abroad: eligibility, duration, destinations, MECEE and licensing considerations, and how to choose the right medical university.",
+      "How Nepali students can study MBBS: +2 requirements, CEE (MECEE-BL), MEC eligibility letter, duration, countries and licensing.",
     summary: "The primary medical degree for students who want to become doctors, taught in English abroad.",
     intro:
       "The Bachelor of Medicine, Bachelor of Surgery (MBBS), called General Medicine in some countries, is the primary medical qualification that leads towards practising as a doctor.",
@@ -39,6 +40,12 @@ const all: Programme[] = [
     ],
     faqs: [
       {
+        // Source: MEC FAQ (mec.gov.np/frontfaq), read 2026-11-25.
+        question: "What marks do I need to sit the CEE (MECEE-BL)?",
+        answer:
+          "Nepal's Medical Education Commission (MEC) states that bachelor-level candidates need Grade 12 or equivalent with Physics, Chemistry and Biology, with an average of 50% marks or a 2.4 GPA. Further conditions are set in each programme's syllabus, so check the current notice on mec.gov.np.",
+      },
+      {
         question: "Is MBBS abroad recognised in my country?",
         answer:
           "Recognition is decided by your home-country medical regulator, not by the university or consultancy. Check the regulator's current rules and the university's World Directory of Medical Schools listing before you apply.",
@@ -57,8 +64,9 @@ const all: Programme[] = [
     shortName: "MD",
     category: "Medicine",
     icon: "graduation",
+    seoTitle: "MD Abroad for Nepali Students",
     seoDescription:
-      "Doctor of Medicine (MD) abroad as a primary medical degree in Georgia and the Philippines: eligibility, duration and key considerations.",
+      "Doctor of Medicine (MD) as a first medical degree for Nepali students in Georgia and the Philippines: eligibility, duration and MEC rules.",
     summary: "A primary medical degree titled MD in countries such as Georgia and the Philippines.",
     intro:
       "In several countries the primary medical degree is called Doctor of Medicine (MD). This is a first medical qualification, not the postgraduate MD specialisation used in South Asia.",
@@ -92,8 +100,9 @@ const all: Programme[] = [
     shortName: "Dentistry",
     category: "Dental",
     icon: "smile",
+    seoTitle: "BDS for Nepali Students: Eligibility & Options",
     seoDescription:
-      "Study dentistry (BDS/DDS) abroad: eligibility, typical duration, available destinations and licensing considerations for students.",
+      "BDS and DDS for Nepali students: eligibility, CEE (MECEE-BL), duration, countries, the MEC eligibility letter and licensing.",
     summary: "Professional dental degrees combining biomedical science with hands-on clinical practice.",
     intro:
       "Dentistry programmes, titled BDS or DDS depending on the country, train students in oral health, dental surgery and patient care.",
@@ -123,8 +132,9 @@ const all: Programme[] = [
     shortName: "Nursing",
     category: "Allied health",
     icon: "heart",
+    seoTitle: "BSc Nursing for Nepali Students: Study Options",
     seoDescription:
-      "Study nursing abroad: bachelor's programmes, eligibility, duration, destinations and nurse registration considerations for international students.",
+      "Bachelor-level nursing for Nepali students: entry requirements, CEE (MECEE-BL), MEC eligibility letter, duration, countries and registration.",
     summary: "Degree programmes preparing students for professional nursing practice and patient care.",
     intro:
       "Bachelor's-level nursing programmes prepare students for professional practice in hospitals and community healthcare.",
@@ -141,6 +151,12 @@ const all: Programme[] = [
     ],
     faqs: [
       {
+        // Source: MEC FAQ (mec.gov.np/frontfaq), read 2026-11-25.
+        question: "Do Nepali students need an MEC Eligibility Letter for nursing abroad?",
+        answer:
+          "Nepal's Medical Education Commission (MEC) states that an Eligibility Letter is needed before going abroad for bachelor-level medical education in academic subjects that are registered with a professional council. Confirm with MEC that this covers your nursing programme before you apply.",
+      },
+      {
         question: "Can I work abroad after a nursing degree?",
         answer:
           "Possibly, but each country's nursing regulator sets its own registration and examination requirements. No degree guarantees registration or employment.",
@@ -154,8 +170,9 @@ const all: Programme[] = [
     shortName: "Pharmacy",
     category: "Allied health",
     icon: "pill",
+    seoTitle: "Pharmacy for Nepali Students: Study Options",
     seoDescription:
-      "Study pharmacy abroad: degree types, eligibility, duration and pharmacist registration considerations for international students.",
+      "Study pharmacy as a Nepali student: degree types, entry requirements, duration, where to study and pharmacist registration.",
     summary: "Study medicines, pharmacology and pharmaceutical practice for careers in healthcare and industry.",
     intro:
       "Pharmacy degrees focus on medicines: how they are developed, how they work, and how they are dispensed safely to patients.",
@@ -182,8 +199,9 @@ const all: Programme[] = [
     shortName: "Biomedical",
     category: "Health sciences",
     icon: "microscope",
+    seoTitle: "Biomedical Sciences for Nepali Students",
     seoDescription:
-      "Study Biomedical Sciences abroad: laboratory-focused degrees, eligibility, typical duration and how they differ from an MBBS degree.",
+      "Biomedical sciences for Nepali students: what you study, entry requirements, typical duration and how the degree differs from MBBS.",
     summary: "Laboratory-focused study of human biology and disease for research and diagnostic careers.",
     intro:
       "Biomedical Sciences explores the biology of human health and disease, with a strong emphasis on laboratory and research skills.",

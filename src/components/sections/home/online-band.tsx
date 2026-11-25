@@ -66,7 +66,7 @@ export function OnlineBand({ section }: { section: Section }) {
               <div className="flex items-center justify-between">
                 <p className="font-display font-extrabold text-navy">{d.card?.title}</p>
                 {d.card?.liveLabel && (
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-gold-light px-2.5 py-1 text-xs font-bold text-gold-dark">
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-gold-light px-2.5 py-1 text-xs font-bold text-navy">
                     <span className="size-1.5 rounded-full bg-gold" /> {d.card.liveLabel}
                   </span>
                 )}
@@ -74,8 +74,8 @@ export function OnlineBand({ section }: { section: Section }) {
               <div className="mt-4 grid grid-cols-3 gap-2">
                 {[
                   { i: "S", l: "Student", c: "bg-primary" },
-                  { i: "P", l: "Parent", c: "bg-sky" },
-                  { i: "C", l: "Counsellor", c: "bg-gold" },
+                  { i: "P", l: "Parent", c: "bg-primary-dark" },
+                  { i: "C", l: "Counsellor", c: "bg-[#b85a00]" },
                 ].map((p) => (
                   <div key={p.l} className="flex aspect-[4/5] flex-col items-center justify-center gap-2 rounded-2xl bg-muted">
                     <span className={`grid size-11 place-items-center rounded-full font-sans font-extrabold text-white ${p.c}`}>{p.i}</span>

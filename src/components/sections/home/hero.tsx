@@ -67,7 +67,7 @@ export async function HomeHero({ section }: { section: Section }) {
           <div className="grid items-end gap-8 lg:grid-cols-[1.05fr_0.95fr]">
             <div className={show("booking") ? "pt-12 pb-36 sm:pt-16 lg:pt-20 lg:pb-44" : "pt-12 pb-16 sm:pt-16 lg:py-20"}>
               <h1 className="text-[2.4rem] leading-[1.08] font-extrabold sm:text-5xl xl:text-[3.5rem]">
-                {d.titleLine1}
+                {d.titleLine1}{" "}
                 {d.titleLine2 && (
                   <span className="relative mt-1 block w-fit">
                     <span className="text-brand-gradient">{d.titleLine2}</span>

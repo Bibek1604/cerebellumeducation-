@@ -14,7 +14,7 @@ export async function TopBar() {
         <p className="flex items-center gap-2">
           <GraduationCap aria-hidden className="size-4 text-gold" />
           Free counselling for MBBS &amp; medical study abroad
-          <Link href="/book-counselling" className="ml-1 font-semibold text-gold underline-offset-4 hover:underline">
+          <Link href="/book-counselling" className="ml-1 font-semibold text-white underline underline-offset-4 hover:no-underline">
             Book now →
           </Link>
         </p>

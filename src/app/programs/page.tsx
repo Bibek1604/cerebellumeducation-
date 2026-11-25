@@ -7,9 +7,9 @@ import { getProgrammes } from "@/cms/programmes";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "Medical & Healthcare Programmes Abroad",
+  title: "MBBS, BDS, Nursing & Pharmacy Courses",
   description:
-    "Explore MBBS, MD, dentistry, nursing, pharmacy and biomedical sciences programmes abroad: entry requirements, duration and what to check before applying.",
+    "Compare MBBS, MD, BDS, nursing, pharmacy and biomedical courses for Nepali +2 science students: entry requirements, duration and where to study.",
   path: "/programs",
 });
 

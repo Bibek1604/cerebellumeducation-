@@ -4,11 +4,17 @@ import { PostCard } from "@/components/media/post-card";
 import { getPosts } from "@/cms/media";
 import { pageMetadata } from "@/lib/seo";
 
-export const metadata = pageMetadata({
-  title: "Blog: Guides to Studying Medicine Abroad",
-  description: "Guides, updates and advice on studying MBBS and medicine abroad from the Cerebellum Education Network counselling team.",
-  path: "/blog",
-});
+/** Hidden from search engines while the page is still empty. */
+export async function generateMetadata() {
+  const hasContent = (await getPosts()).length > 0;
+  return pageMetadata({
+    title: "CEE, MBBS & Nursing Guides for Nepal",
+    description:
+      "Guides for Nepali students on CEE (MECEE-BL), MEC eligibility, MBBS abroad and nursing from the Cerebellum counselling team.",
+    path: "/blog",
+    noIndex: !hasContent,
+  });
+}
 
 /** Posts: Admin → Blog posts. */
 export default async function BlogPage() {

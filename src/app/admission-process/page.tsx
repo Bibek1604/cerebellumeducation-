@@ -14,9 +14,9 @@ import { pageMetadata } from "@/lib/seo";
 import { cn, pad2 } from "@/lib/utils";
 
 export const metadata = pageMetadata({
-  title: "MBBS Abroad Admission Process: Step by Step",
+  title: "MBBS Admission Process for Nepali Students",
   description:
-    "How admission to study medicine abroad works: counselling, eligibility assessment, university selection, application, admission letter, visa and pre-departure.",
+    "From CEE result to campus: counselling, MEC eligibility letter, university choice, application, visa and travel for Nepali medical students.",
   path: "/admission-process",
 });
 

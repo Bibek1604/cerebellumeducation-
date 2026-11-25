@@ -1,4 +1,5 @@
 import "server-only";
+import { getDestination } from "@/data/destinations";
 import type { Destination } from "@/types/content";
 import type { Programme } from "@/types/content";
 import { getProgrammes } from "./programmes";
@@ -33,6 +34,7 @@ type Row = {
   recognition: unknown;
   sources: unknown;
   faqs: unknown;
+  seoTitle?: string;
   seoDescription: string;
 };
 
@@ -53,6 +55,8 @@ export async function getDestinations(): Promise<Destination[]> {
       capital: r.capital,
       coordinates: r.coordinates,
       tagline: r.tagline,
+      // Content saved before this field existed falls back to the built-in title.
+      seoTitle: r.seoTitle || getDestination(r.slug)?.seoTitle || `Study Medicine in ${r.name} for Nepali Students`,
       seoDescription: r.seoDescription || r.summary,
       summary: r.summary,
       overview: textsOf(r.overview),

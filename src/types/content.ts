@@ -28,6 +28,8 @@ export type Destination = {
   capital: string;
   coordinates: string;
   tagline: string;
+  /** Page title for search engines, without the brand name */
+  seoTitle: string;
   /** Meta description, 120–160 characters */
   seoDescription: string;
   summary: string;
@@ -77,6 +79,8 @@ export type Programme = {
   icon: string;
   /** Show the Nepal MEC rules box on the programme page */
   showNepalRules?: boolean;
+  /** Page title for search engines, without the brand name */
+  seoTitle: string;
   /** Meta description, 120–160 characters */
   seoDescription: string;
   summary: string;

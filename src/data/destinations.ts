@@ -21,8 +21,9 @@ const all: Destination[] = [
     capital: "Beijing",
     coordinates: "39.90° N · 116.40° E",
     tagline: "Established English-taught MBBS programmes at large teaching universities",
+    seoTitle: "MBBS in China for Nepali Students",
     seoDescription:
-      "Study MBBS in China: English-taught programmes at authorised universities, eligibility, Mandarin requirements and recognition guidance for students.",
+      "MBBS in China for Nepali students: English-taught programmes, eligibility, Mandarin requirements, the MEC eligibility letter and recognition.",
     summary:
       "China admits international students to English-taught MBBS programmes at universities authorised by its Ministry of Education, with clinical training in affiliated hospitals.",
     overview: [
@@ -94,8 +95,9 @@ const all: Destination[] = [
     capital: "Dhaka",
     coordinates: "23.81° N · 90.41° E",
     tagline: "English-medium MBBS and BDS with a curriculum familiar to South Asian students",
+    seoTitle: "MBBS in Bangladesh for Nepali Students",
     seoDescription:
-      "Study MBBS or BDS in Bangladesh: English-medium programmes regulated by BMDC, eligibility, admission steps and recognition guidance.",
+      "MBBS and BDS in Bangladesh for Nepali students: English-medium programmes, eligibility, admission steps, the MEC eligibility letter and recognition.",
     summary:
       "Bangladesh offers English-medium MBBS and BDS programmes regulated by the Bangladesh Medical and Dental Council, with a disease profile and curriculum familiar to students from the region.",
     overview: [
@@ -163,8 +165,9 @@ const all: Destination[] = [
     capital: "New Delhi",
     coordinates: "28.61° N · 77.21° E",
     tagline: "A large medical education system regulated by the National Medical Commission",
+    seoTitle: "MBBS in India for Nepali Students",
     seoDescription:
-      "Study MBBS in India: NMC-regulated programmes, entrance-exam routes for international students, eligibility and what to check first.",
+      "MBBS, BDS, nursing and pharmacy in India for Nepali students: entrance routes, eligibility, the MEC eligibility letter and what to check first.",
     summary:
       "India has one of the world's largest medical education systems, regulated by the National Medical Commission. Admission routes for international students depend on nationality and current regulations.",
     overview: [
@@ -221,8 +224,9 @@ const all: Destination[] = [
     capital: "Moscow",
     coordinates: "55.76° N · 37.62° E",
     tagline: "Six-year General Medicine programmes at long-established state universities",
+    seoTitle: "MBBS in Russia for Nepali Students",
     seoDescription:
-      "Study General Medicine (MBBS) in Russia: six-year programmes, English and Russian tracks, eligibility, admission and recognition tips.",
+      "Six-year General Medicine (MBBS) in Russia for Nepali students: English and Russian tracks, eligibility, admission and MEC eligibility letter.",
     summary:
       "Russian state medical universities offer six-year General Medicine programmes, many with English-medium teaching in the early years and Russian language training for clinical work.",
     overview: [
@@ -282,8 +286,9 @@ const all: Destination[] = [
     capital: "Tbilisi",
     coordinates: "41.72° N · 44.79° E",
     tagline: "English-taught six-year MD programmes in a European-style system",
+    seoTitle: "MD in Georgia for Nepali Students",
     seoDescription:
-      "Study MD in Georgia: English-taught six-year Doctor of Medicine programmes, eligibility, language requirements and recognition guidance.",
+      "English-taught six-year MD in Georgia for Nepali students: eligibility, language requirements, the MEC eligibility letter and recognition.",
     summary:
       "Georgia offers English-taught Doctor of Medicine (MD) programmes aligned to European higher-education frameworks, at universities authorised by its national quality agency.",
     overview: [
@@ -343,8 +348,9 @@ const all: Destination[] = [
     capital: "Astana",
     coordinates: "51.17° N · 71.45° E",
     tagline: "English-medium General Medicine at national medical universities in Central Asia",
+    seoTitle: "MBBS in Kazakhstan for Nepali Students",
     seoDescription:
-      "Study General Medicine (MBBS) in Kazakhstan: English-medium options, programme length, eligibility and recognition considerations.",
+      "General Medicine (MBBS) in Kazakhstan for Nepali students: English-medium options, duration, eligibility, MEC eligibility letter and recognition.",
     summary:
       "Kazakhstan's medical universities offer General Medicine programmes with English-medium options for international students and clinical training in affiliated hospitals.",
     overview: [
@@ -390,8 +396,9 @@ const all: Destination[] = [
     capital: "Manila",
     coordinates: "14.60° N · 120.98° E",
     tagline: "An American-style MD pathway taught entirely in English",
+    seoTitle: "Medicine in the Philippines for Nepali Students",
     seoDescription:
-      "Study medicine in the Philippines: pre-med plus 4-year MD pathway taught in English, NMAT entry, eligibility and recognition guidance.",
+      "Pre-med plus a four-year MD in the Philippines for Nepali students: taught in English, NMAT entry, eligibility and MEC eligibility letter.",
     summary:
       "The Philippines follows an American-style pathway: a pre-medical bachelor's degree followed by a four-year Doctor of Medicine (MD), all taught in English.",
     overview: [

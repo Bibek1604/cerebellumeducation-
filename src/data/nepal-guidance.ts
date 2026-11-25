@@ -23,7 +23,7 @@ export const nepalGuidance: GuidanceBlock = {
   audience: "Nepali citizens",
   points: [
     "Before going abroad for a medical degree, obtain an Eligibility Letter (Eligibility Certificate) from Nepal's Medical Education Commission (MEC). MEC states it must be taken before you go.",
-    "Eligibility is generally linked to passing MEC's bachelor-level entrance exam, MECEE-BL. The MEC FAQ describes limited exceptions. Check the current rules before relying on one.",
+    "Eligibility is generally linked to passing MEC's bachelor-level entrance exam, MECEE-BL (commonly called CEE). The MEC FAQ describes limited exceptions. Check the current rules before relying on one.",
     "MEC does not issue the letter for programmes that cannot be registered with Nepal's professional council, for example programmes shorter than Nepal's equivalent.",
     "MEC's FAQ states that registration with the professional council follows only after applying with the Eligibility Letter.",
     "On return, Nepal Medical Council (NMC) conducts a licensing examination before registration.",

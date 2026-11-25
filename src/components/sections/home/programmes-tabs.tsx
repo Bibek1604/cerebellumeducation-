@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils";
 export type ProgrammeTab = {
   slug: string;
   name: string;
+  shortName: string;
   category: string;
   icon: Programme["icon"];
   summary: string;
@@ -51,7 +52,7 @@ export function ProgrammesTabs({
               <Image src={p.photo.src} alt={p.photo.alt} width={1600} height={1067} sizes="(min-width: 1024px) 30vw, 100vw" className="aspect-[4/4.2] w-full object-cover" />
             </div>
             <div className="relative -mt-16 mx-4 rounded-3xl border border-line bg-white p-6 shadow-lift sm:p-8 md:mx-0 md:mt-0 md:-ml-16">
-              <span className="inline-flex rounded-md bg-primary-light px-2.5 py-1 text-[0.7rem] font-bold tracking-[0.12em] text-primary uppercase">{p.category}</span>
+              <span className="inline-flex rounded-md bg-primary-light px-2.5 py-1 text-[0.7rem] font-bold tracking-[0.12em] text-primary-dark uppercase">{p.category}</span>
               <h3 className="mt-4 text-3xl leading-tight font-bold sm:text-[2.1rem]">{p.name}</h3>
               <p className="mt-3 leading-relaxed text-ink">{p.summary}</p>
               <ul className="mt-5 grid gap-2.5 text-sm sm:grid-cols-2">
@@ -67,7 +68,8 @@ export function ProgrammesTabs({
                   {bookLabel}
                 </ButtonLink>
                 <ButtonLink href={`/programs/${p.slug}`} variant="outline">
-                  {learnLabel} <ArrowRight aria-hidden className="size-4" />
+                  {/* Links need a meaningful name on their own, so a plain "Learn more" also gets the programme. */}
+                  {learnLabel.includes("{programme}") ? learnLabel.replaceAll("{programme}", p.shortName) : `${learnLabel}: ${p.shortName}`} <ArrowRight aria-hidden className="size-4" />
                 </ButtonLink>
               </div>
             </div>

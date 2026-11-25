@@ -14,9 +14,10 @@ import { pageMetadata } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 
 export const metadata = pageMetadata({
-  title: "About Us",
+  title: "About Cerebellum: Medical Counsellors in Kathmandu",
   description:
-    "Cerebellum Education Network is an international medical education consultancy offering honest, student-centred guidance for studying medicine abroad.",
+    "Meet Cerebellum Education Network, a Kathmandu consultancy giving Nepali students and parents clear guidance on studying medicine abroad.",
+  absoluteTitle: true,
   path: "/about",
 });
 

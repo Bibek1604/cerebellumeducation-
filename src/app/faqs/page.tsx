@@ -7,9 +7,9 @@ import type { Section } from "@/cms/types";
 import { faqJsonLd, pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "FAQs: Studying Medicine Abroad",
+  title: "MBBS & MEC Questions for Nepali Students",
   description:
-    "Answers to common questions about MBBS abroad: eligibility, entrance exams, documents, comparing universities, costs and medical licensing after graduation.",
+    "Answers for Nepali students and parents on CEE (MECEE-BL), the MEC eligibility letter, documents, costs, recognition and medical licensing.",
   path: "/faqs",
 });
 
