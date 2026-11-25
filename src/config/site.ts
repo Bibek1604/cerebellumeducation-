@@ -69,7 +69,7 @@ export const siteConfig = {
     // TODO(owner): Google Maps "Embed a map" iframe src URL
     mapEmbedUrl: null as string | null,
     // Google Maps share link for "Get directions"
-    mapLink: "https://maps.app.goo.gl/3vk1CvZCQiz9ziHu9" as string | null,
+    mapLink: "https://www.google.com/maps?cid=6945449508289531818" as string | null,
   },
 
   // TODO(owner): official social profiles, e.g. { platform: "facebook", label: "Facebook", href: "https://facebook.com/..." }
