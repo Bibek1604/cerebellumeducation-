@@ -1,8 +1,9 @@
 /**
- * Reels, videos and blog posts: field specs and (empty) defaults.
- * Nothing is invented — every list starts empty until an administrator adds items.
+ * Reels, videos and blog posts: field specs and defaults.
+ * Nothing is invented: reels and videos start empty, the blog starts with the sourced articles in data/posts.ts.
  * Pure data — safe to import from client components.
  */
+import { seedPosts } from "@/data/posts";
 import type { FieldSpec, SettingsContent } from "./types";
 
 const empty = (key: string) => (): SettingsContent => ({ version: 1, hidden: [], data: { [key]: [] } });
@@ -51,7 +52,7 @@ export const blogSpec: FieldSpec[] = [
     itemLabel: "post",
     titleKey: "title",
     max: 100,
-    help: "Each post gets its own page at /blog/web-address. The newest date is shown first. Untick a post to hide it without deleting it.",
+    help: "Each post gets its own page at /blog/web-address. The newest date is shown first. Untick a post to hide it without deleting it. In paragraphs, leave an empty line between paragraphs, start lines with \"- \" for a list, and write [text](/contact) or [text](https://…) for a link.",
     fields: [
       { type: "text", key: "title", label: "Title", maxLength: 140 },
       { type: "text", key: "slug", label: "Web address (leave empty to make one from the title)", format: "slug", maxLength: 80, placeholder: "mbbs-in-georgia-guide" },
@@ -74,7 +75,23 @@ export const blogSpec: FieldSpec[] = [
     ],
   },
 ];
-export const blogDefaults = empty("posts");
+export const blogDefaults = (): SettingsContent => ({
+  version: 1,
+  hidden: [],
+  data: {
+    posts: seedPosts.map((p) => ({
+      _id: `post-${p.slug}`,
+      enabled: true,
+      title: p.title,
+      slug: p.slug,
+      date: p.date,
+      author: "",
+      excerpt: p.excerpt,
+      cover: { ...p.cover, position: "" },
+      blocks: p.blocks.map((b, i) => ({ _id: `post-${p.slug}-${i}`, enabled: true, ...b })),
+    })),
+  },
+});
 
 /* ───────────── Homepage sections that show the lists above ───────────── */
 

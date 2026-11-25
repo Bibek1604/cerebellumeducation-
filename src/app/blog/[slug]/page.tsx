@@ -6,8 +6,9 @@ import { ButtonLink } from "@/components/ui/button";
 import { JsonLd } from "@/components/ui/json-ld";
 import { PageHero } from "@/components/sections/page-hero";
 import { PostCard } from "@/components/media/post-card";
+import { PostText } from "@/components/media/post-text";
 import { formatPostDate, getPostBySlug, getPosts } from "@/cms/media";
-import { absoluteUrl } from "@/config/site";
+import { absoluteUrl, siteConfig } from "@/config/site";
 import { pageMetadata } from "@/lib/seo";
 
 /** With Cache Components at least one param is required; the placeholder renders notFound(). */
@@ -43,7 +44,8 @@ export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">
           headline: post.title,
           description: post.excerpt || undefined,
           datePublished: post.date || undefined,
-          author: post.author ? { "@type": "Person", name: post.author } : undefined,
+          author: post.author ? { "@type": "Person", name: post.author } : { "@id": `${siteConfig.url}/#organization` },
+          publisher: { "@id": `${siteConfig.url}/#organization` },
           image: post.cover ? absoluteUrl(post.cover.src) : undefined,
           mainEntityOfPage: absoluteUrl(`/blog/${post.slug}`),
         }}
@@ -92,11 +94,7 @@ export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">
             {post.blocks.map((b, i) => (
               <div key={i}>
                 {b.heading && <h2 className="mt-4 mb-3 text-2xl font-extrabold">{b.heading}</h2>}
-                {b.text.split(/\n{2,}/).map((para, j) => (
-                  <p key={j} className="mt-3 whitespace-pre-line first:mt-0">
-                    {para}
-                  </p>
-                ))}
+                <PostText text={b.text} />
               </div>
             ))}
           </div>
