@@ -12,6 +12,23 @@ npm run lint
 
 Copy `.env.example` to `.env.local` and fill in the values.
 
+### Database migrations (only when `DATABASE_URL` is set)
+
+Back up the database first. `prisma.config.ts` reads `DATABASE_URL` from `.env` or the environment, not `.env.local`.
+
+```bash
+npx prisma generate         # after npm install: creates the client the build type-checks
+npx prisma migrate deploy   # empty database, and all later migrations
+```
+
+If the database already has tables, the first `migrate deploy` stops with P3005. Run this once instead
+(the first migration only adds what is missing):
+
+```bash
+npx prisma db execute --file prisma/migrations/20261125000000_init/migration.sql
+npx prisma migrate resolve --applied 20261125000000_init
+```
+
 ## Before launch — owner checklist (`TODO(owner)` in code)
 
 Nothing has been invented; empty values are hidden on the site. Search the code for `TODO(owner)`.

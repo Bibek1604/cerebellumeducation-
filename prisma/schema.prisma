@@ -13,3 +13,38 @@ model User {
   name      String?
   createdAt DateTime @default(now())
 }
+
+// Admin Panel tables. The app reads and writes them with plain SQL in
+// src/cms/store.ts, which also creates them when missing: keep both in step.
+
+model CmsContent {
+  key       String   @id
+  data      Json
+  updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamptz(6)
+  updatedBy String?  @map("updated_by")
+
+  @@map("cms_content")
+}
+
+model CmsMedia {
+  id           String   @id
+  mime         String
+  bytes        Bytes
+  originalName String?  @map("original_name")
+  size         Int
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  createdBy    String?  @map("created_by")
+
+  @@map("cms_media")
+}
+
+model CmsAdmin {
+  id           String    @id
+  email        String    @unique
+  name         String
+  passwordHash String    @map("password_hash")
+  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  lastLoginAt  DateTime? @map("last_login_at") @db.Timestamptz(6)
+
+  @@map("cms_admins")
+}
