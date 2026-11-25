@@ -315,7 +315,7 @@ export const homeDefaults = (): PageContent => ({
       titleLine1: "Medical career counselling in Kathmandu",
       titleLine2: "MBBS, BDS & nursing",
       description:
-        "Your medical dreams, a world of opportunities. We help Nepali students plan what comes after CEE: choosing the right country and university for MBBS, BDS or nursing, the MEC eligibility letter, your application and getting you to campus.",
+        "Your medical dreams, a world of opportunities. We run CEE preparation classes and help Nepali students plan what comes next: choosing the right country and university for MBBS, BDS or nursing, the MEC eligibility letter, your application and getting you to campus.",
       chips: texts("chip", ["MBBS & medical degrees", "Admission & visa guidance", "Support until you reach campus"]),
       primaryButton: { label: "Book Free Counselling", href: "/book-counselling" },
       secondaryButton: { label: "Explore destinations", href: "/destinations" },

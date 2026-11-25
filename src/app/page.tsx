@@ -19,7 +19,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata = pageMetadata({
   title: "MBBS Abroad & Medical Counselling in Nepal | Cerebellum",
   description:
-    "Kathmandu medical counsellors for Nepali students: MBBS, BDS and nursing options after CEE, MEC eligibility and admission help. First session free.",
+    "CEE classes and medical counselling in Kathmandu for Nepali students: MBBS, BDS and nursing options, MEC eligibility and admission help.",
   path: "/",
   absoluteTitle: true,
 });

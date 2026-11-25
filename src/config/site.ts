@@ -42,31 +42,29 @@ export const siteConfig = {
   shortName: "Cerebellum",
   tagline: "International Medical Education Consultancy",
   description:
-    "Cerebellum Education Network is a Kathmandu consultancy that guides Nepali students and parents through studying medicine abroad, from counselling and university selection to applications, visas and pre-departure support.",
+    "Cerebellum Education Network is a Kathmandu consultancy that runs CEE preparation classes and guides Nepali students and parents through studying medicine abroad, from counselling and university selection to applications, visas and pre-departure support.",
 
   /** Public URL, used for canonical links, sitemap and Open Graph. Set NEXT_PUBLIC_SITE_URL in production. */
   url: (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(/\/$/, ""),
 
   /** Content revision date shown on legal pages and used in the sitemap. Update when content changes. */
-  lastUpdated: "2026-11-17",
+  lastUpdated: "2026-11-25",
 
   contact: {
-    // TODO(owner): display format, e.g. "+977 1-234 5678"
-    phone: null as string | null,
-    // TODO(owner): dial format for tel: links, e.g. "+97712345678"
-    phoneHref: null as string | null,
+    phone: "+977 974-2823747" as string | null,
+    // Dial format for tel: links
+    phoneHref: "+9779742823747" as string | null,
     // TODO(owner): WhatsApp number, international format without + or spaces, e.g. "9779800000000"
     whatsapp: null as string | null,
     // TODO(owner): public enquiry email
     email: null as string | null,
     // TODO(owner): office address
     address: null as Address | null,
-    // TODO(owner): e.g. ["Sunday – Friday: 10:00 – 17:00", "Saturday: Closed"]
-    officeHours: null as string[] | null,
+    officeHours: ["Sunday – Friday: 9:00 AM – 6:00 PM"] as string[] | null,
     // TODO(owner): Google Maps "Embed a map" iframe src URL
     mapEmbedUrl: null as string | null,
-    // TODO(owner): Google Maps share link for "Get directions"
-    mapLink: null as string | null,
+    // Google Maps share link for "Get directions"
+    mapLink: "https://maps.app.goo.gl/3vk1CvZCQiz9ziHu9" as string | null,
   },
 
   // TODO(owner): official social profiles, e.g. { platform: "facebook", label: "Facebook", href: "https://facebook.com/..." }

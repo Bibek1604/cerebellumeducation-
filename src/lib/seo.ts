@@ -53,7 +53,7 @@ export function organizationJsonLd(settings: SiteSettings) {
     description: siteConfig.description,
     alternateName: siteConfig.shortName,
     areaServed: { "@type": "Country", name: "Nepal" },
-    knowsAbout: ["Medical education abroad", "MBBS admissions", "Medical career counselling in Nepal", "MECEE-BL (CEE)", "MEC Eligibility Letter"],
+    knowsAbout: ["CEE preparation classes", "Medical education abroad", "MBBS admissions", "Medical career counselling in Nepal", "MECEE-BL (CEE)", "MEC Eligibility Letter"],
   };
   if (contact.email) data.email = contact.email;
   if (contact.phone) data.telephone = contact.phone;

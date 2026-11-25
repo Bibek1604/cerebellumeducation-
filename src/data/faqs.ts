@@ -42,6 +42,11 @@ const draftCategories: DraftCategory[] = [
           "If you are a Nepali citizen, yes in most cases. Nepal's Medical Education Commission (MEC) states that an Eligibility Letter (Eligibility Certificate) must be obtained before going abroad for medical study, and eligibility is generally linked to passing its bachelor-level entrance exam, MECEE-BL. MEC's FAQ describes limited exceptions and states that registration with the professional council follows only after applying with the letter. Check the current rules on mec.gov.np before you apply.",
       },
       {
+        question: "Do you run CEE classes or only counselling?",
+        answer:
+          "Both. We run CEE (MECEE-BL) preparation classes and also counsel students and parents on their options after the exam. Contact us for current class times, fees and intake dates.",
+      },
+      {
         question: "What happens when I return to Nepal after graduating?",
         answer:
           "Nepal Medical Council conducts a licensing examination before registration. Requirements can change, so confirm the current process on nmc.org.np.",
